@@ -1,10 +1,14 @@
 import { State } from "./state";
-// import { Patient, Diagnosis, Entry } from "../types";
+import { SongEntry } from "../types";
 
 export type Action =
   | {
       type: "SET_SPEED_ANIM";
       payload: number;
+    }
+  | {
+    type: "SET_SPEED_CHANGE_TIME";
+    payload: number;
     }
   | {
       type: "PLAY_TOGGLE";
@@ -13,11 +17,11 @@ export type Action =
   | {
       type: "SET_SOURCE";
       payload: AudioBufferSourceNode;
-    };
-//   | {
-//     type: "SET_SPEED_PLAYBACK";
-//     payload: AudioBufferSourceNode
-//   };
+    }
+  | {
+    type: "SET_SONGLIST";
+    payload: Array<SongEntry>;
+  };
 
 export const reducer = (state: State, action: Action): State => {
     switch (action.type) {
@@ -37,6 +41,14 @@ export const reducer = (state: State, action: Action): State => {
                     
                 },
             };
+        case "SET_SPEED_CHANGE_TIME":
+            return {
+                ...state,
+                Tape1: {
+                    ...state.Tape1,
+                    speedChangeTime: action.payload
+                }
+            };
         case "PLAY_TOGGLE":
             return {
                 ...state,
@@ -53,11 +65,11 @@ export const reducer = (state: State, action: Action): State => {
                     audioSrc: action.payload
                 },
             };
-        // case "SET_SPEED_PLAYBACK":
-        //     return {
-        //         ...state,
-        //         Src1: action.payload
-        //     };
+        case "SET_SONGLIST":
+            return {
+                ...state,
+                audiolist: action.payload
+            };
         default:
             return state;
     }
@@ -65,10 +77,14 @@ export const reducer = (state: State, action: Action): State => {
 
 //NONE OF THE STATE UPDATES ARE WORKING VIA THE REDUCER - DEBUG
 export const setSpeed_anim = (speed: number): Action => {
-    const newduration = 3/speed;
+    const newduration = 3/(speed**4);
     document.documentElement.style.setProperty('--animation-duration', `${newduration}s`);
     console.log('speed',speed)
     return { type: "SET_SPEED_ANIM", payload: speed };
+};
+
+export const setSpeedChangeTime = (time: number): Action => {
+    return {type: "SET_SPEED_CHANGE_TIME", payload: time};
 };
 
 export const setPlay = (play: boolean): Action => {
@@ -79,6 +95,10 @@ export const setPlay = (play: boolean): Action => {
 
 export const setSrc = (source: AudioBufferSourceNode): Action => {    
     return {type: "SET_SOURCE", payload: source};
+};
+
+export const setSongList = (songs: Array<SongEntry>): Action => {
+    return {type: "SET_SONGLIST", payload: songs};
 };
 
 // export const setSpeed_playback = (speed:number, audio: AudioBufferSourceNode, context: AudioContext): Action => {

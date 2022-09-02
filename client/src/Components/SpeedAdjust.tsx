@@ -1,12 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import { useStateValue, setSpeed_anim} from '../state';
+import { useStateValue, setSpeed_anim, setPlay, setSpeedChangeTime} from '../state';
 
 export default function VerticalSlider() {
     
     const [{Tape1}, dispatch] = useStateValue();
-    // const audioCtx = Tape1.audioCtx;
 
     const [value, setValue] = React.useState<number>(100);
 
@@ -47,10 +46,16 @@ export default function VerticalSlider() {
 
     //Forced to mutate state directly since modifying shallow state copy doesn't seem to work in reducer...
     const handleChangeCommit = async () => {
-        await dispatch(setSpeed_anim((value/100)**(4)));
-        Tape1.audioCtx.suspend()
+        const originalPlayState = Tape1.play;
+        await dispatch(setPlay(false))
+        await dispatch(setSpeed_anim((value/100)));
+        if (originalPlayState) {Tape1.audioCtx.suspend()}
         Tape1.audioSrc.playbackRate.value = value/100
-        Tape1.audioCtx.resume()
+        dispatch(setSpeedChangeTime(Tape1.audioCtx.currentTime));        
+        if (originalPlayState) {
+          Tape1.audioCtx.resume()
+          dispatch(setPlay(true))
+        }
     };
 
     const valuetext = (value: number) => {
