@@ -3,6 +3,7 @@
 import express from 'express';
 import songsService from '../services/songlistService';
 import { SongEntry } from '../types';
+// import type {Readable} from 'stream';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
@@ -50,6 +51,9 @@ router.get('/:id', async (req,res) => {
 
     const item = await client.send(command);
     item.Body.pipe(res);
+    // const stream = item.Body as Readable;
+    // console.log(stream);
+
 
   } catch (error: unknown) {
     let errorMessage = 'Something went wrong.';
