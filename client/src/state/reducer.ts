@@ -19,6 +19,10 @@ export type Action =
       payload: AudioBufferSourceNode;
     }
   | {
+      type: "SET_CONTEXT";
+      payload: AudioContext;
+    }
+  | {
     type: "SET_SONGLIST";
     payload: Array<SongEntry>;
   };
@@ -65,6 +69,14 @@ export const reducer = (state: State, action: Action): State => {
                     audioSrc: action.payload
                 },
             };
+        case "SET_CONTEXT":
+            return {
+                ...state,
+                Tape1: {
+                    ...state.Tape1,
+                    audioCtx: action.payload
+                }
+            };
         case "SET_SONGLIST":
             return {
                 ...state,
@@ -99,6 +111,10 @@ export const setSrc = (source: AudioBufferSourceNode): Action => {
 
 export const setSongList = (songs: Array<SongEntry>): Action => {
     return {type: "SET_SONGLIST", payload: songs};
+};
+
+export const setCtx = (context: AudioContext): Action => {    
+    return {type: "SET_CONTEXT", payload: context};
 };
 
 // export const setSpeed_playback = (speed:number, audio: AudioBufferSourceNode, context: AudioContext): Action => {

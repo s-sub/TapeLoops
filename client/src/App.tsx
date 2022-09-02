@@ -6,10 +6,12 @@ import RangeSlider from './Components/PlayBar';
 import './App.css';
 import axios from "axios";
 import {Grid} from '@mui/material'
-import {audioBaseUrl, apiBaseUrl} from './constants'
-import { useStateValue, setPlay, setSrc, setSongList } from './state';
+import {apiBaseUrl} from './constants'
+import { useStateValue, setPlay, setSongList } from './state';
 import {SongEntry} from './types'
 
+
+//To-do: 1) Fix smooth restart when song selection changes. 2) Add loop-adjustment capabilities
 function App() {
   const [play, setPlay2] = useState(false)
   const [{Tape1}, dispatch] = useStateValue();
@@ -55,9 +57,9 @@ function App() {
     void fetchSongList();
   }, [dispatch])
 
-  useEffect(() => {
-    console.log(audioCtx.currentTime)
-  })
+  // useEffect(() => {
+  //   console.log(Tape1.audioSrc.)
+  // })
 
   //All the below/above should be replaced when you set up the backend API endpoints for Audio retrieval 
   const togglePlay = async () => {

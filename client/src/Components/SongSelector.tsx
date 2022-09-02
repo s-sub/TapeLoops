@@ -4,7 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useStateValue, setSrc } from '../state';
+import { useStateValue, setSrc, setSpeedChangeTime } from '../state';
 import { SongEntry } from '../types';
 
 import axios from "axios";
@@ -35,8 +35,9 @@ export default function SongMenu() {
             const cliplength = audioBuffer.duration;
             source.loopStart = 0;
             source.loopEnd = cliplength;
-            console.log('loopend',source.loopEnd,'cliplength',cliplength)
+            // console.log('loopend',source.loopEnd,'cliplength',cliplength)
             source.playbackRate.value = Tape1.speed;
+            dispatch(setSpeedChangeTime(audioCtx.currentTime));
             source.start();
             dispatch(setSrc(source));
             audioCtx.suspend();

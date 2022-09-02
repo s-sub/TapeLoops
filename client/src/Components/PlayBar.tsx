@@ -122,64 +122,46 @@ const StyledSlider = styled(SliderUnstyled)(
 `,
 );
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-// let interval = setInterval(()=>{})
-
 export default function RangeSlider() {
 
 
-  const [{Tape1}, dispatch] = useStateValue();
-  let loopstart = 0;
-  let loopend = 100;
-  let cliplength = 1;
-  if (Tape1.audioSrc.buffer) {
-        cliplength = Tape1.audioSrc.buffer.duration;
-        loopstart = (Tape1.audioSrc.loopStart/cliplength)*100;
-        loopend = (Tape1.audioSrc.loopEnd/cliplength)*100;
-    }
+  const [{Tape1},] = useStateValue();
 
-  const [values, setValues] = useState<number[]>([loopstart, loopstart, loopend]);
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const [intervalID, setIntervalID] = useState(setInterval(()=>{}));
-  let speed = Tape1.speed;
-  let lastSpeedChange = Tape1.speedChangeTime;
+  const [cliplength, setCliplength] = useState<number>(0);
+  const [loopstart,setLoopstart] = useState<number>(0);
+  const [loopend,setLoopend] = useState<number>(100);
+  const [values, setValues] = useState<number[]>([loopstart, loopstart, loopend]);
+
 
   useEffect(() => {
-    // speed = Tape1.speed;
-    // lastSpeedChange = Tape1.speedChangeTime;
+    if (Tape1.audioSrc.buffer) {
+        setCliplength(Tape1.audioSrc.buffer.duration)
+        setLoopstart((Tape1.audioSrc.loopStart/Tape1.audioSrc.buffer.duration)*100)
+        setLoopend((Tape1.audioSrc.loopEnd/Tape1.audioSrc.buffer.duration)*100)
+    }
+  },[Tape1.audioSrc])
+
+  useEffect(() => {
     if (!Tape1.play) {
-        // console.log('CLEARED')
+        Tape1.audioCtx.suspend();
         clearInterval(intervalID)
     }
     else {
         clearInterval(intervalID)
-        console.log('timegap',Tape1.audioCtx.currentTime-lastSpeedChange)
         const interval = setInterval(() => {
-        const moduloTime = ((((Tape1.audioCtx.currentTime-lastSpeedChange)*speed)+lastSpeedChange)/cliplength)*100 % (loopend-loopstart)
+        // const moduloTime = ((((Tape1.audioCtx.currentTime-lastSpeedChange)*speed)+lastSpeedChange)/cliplength)*100 % (loopend-loopstart)
+        const moduloTime = ((((Tape1.audioCtx.currentTime)*Tape1.speed))/cliplength)*100 % (loopend-loopstart)
         setValues([loopstart,((moduloTime)+loopstart),loopend])
     }, 20)
         setIntervalID(interval)
     }
-  },[Tape1.play])
+  },[Tape1.play,Tape1.speed])
 
-  useEffect(() => {
-    speed = Tape1.speed;
-    //Drop off point - to make sure things are synced during/after timechange (won't be perfect)
-    // lastSpeedChange = Tape1.speedChangeTime;
-    lastSpeedChange = Tape1.audioCtx.currentTime;
-    if (Tape1.play) {
-        clearInterval(intervalID)
-        const interval = setInterval(() => {
-        const moduloTime = ((((Tape1.audioCtx.currentTime-lastSpeedChange)*speed)+lastSpeedChange)/cliplength)*100 % (loopend-loopstart)
-        setValues([loopstart,((moduloTime)+loopstart),loopend])
-    }, 20)
-        setIntervalID(interval)
-    }
-  },[Tape1.speed])
-
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    setValues(newValue as number[]);
-  };
+//   const handleChange = (event: Event, newValue: number | number[]) => {
+//     setValues(newValue as number[]);
+//   };
 
 //   const handleRelease = (event: Event, newValue: number | number[]) => {
 //     setValues(newValue as number[]);
@@ -189,7 +171,7 @@ export default function RangeSlider() {
     <StyledSlider
         // defaultValue={[loopstart, 30, loopend]}
         value={values}
-        onChange={handleChange}
+        // onChange={handleChange}
         // onChangeCommitted={handleRelease}
         min={0}
         max={100}
