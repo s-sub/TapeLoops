@@ -25,6 +25,14 @@ export type Action =
   | {
     type: "SET_SONGLIST";
     payload: Array<SongEntry>;
+  }
+  | {
+    type: "SET_LOOPSTART";
+    payload: number;
+  }
+  | {
+    type: "SET_LOOPLEN";
+    payload: number;
   };
 
 export const reducer = (state: State, action: Action): State => {
@@ -82,6 +90,22 @@ export const reducer = (state: State, action: Action): State => {
                 ...state,
                 audiolist: action.payload
             };
+        case "SET_LOOPSTART":
+            return {
+                ...state,
+                Tape1: {
+                    ...state.Tape1,
+                    loopstart: action.payload
+                }
+            };
+        case "SET_LOOPLEN":
+            return {
+                ...state,
+                Tape1: {
+                    ...state.Tape1,
+                    looplen: action.payload
+                }
+            };
         default:
             return state;
     }
@@ -115,6 +139,14 @@ export const setSongList = (songs: Array<SongEntry>): Action => {
 
 export const setCtx = (context: AudioContext): Action => {    
     return {type: "SET_CONTEXT", payload: context};
+};
+
+export const setLoopstart = (loopstart: number): Action => {    
+    return {type: "SET_LOOPSTART", payload: loopstart};
+};
+
+export const setLooplen = (looplen: number): Action => {    
+    return {type: "SET_LOOPLEN", payload: looplen};
 };
 
 // export const setSpeed_playback = (speed:number, audio: AudioBufferSourceNode, context: AudioContext): Action => {

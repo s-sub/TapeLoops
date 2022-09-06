@@ -69,7 +69,7 @@ export default function VerticalSlider() {
         source.loopStart = currentLoopStart;
         source.loopEnd = currentLoopEnd;
         source.playbackRate.value = value/100;
-        source.start();
+        source.start(0,currentLoopStart);
         audioCtx.suspend()
         dispatch(setSrc(source));
 

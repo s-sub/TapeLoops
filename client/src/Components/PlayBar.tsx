@@ -137,27 +137,44 @@ export default function RangeSlider() {
 
   useEffect(() => {
     if (Tape1.audioSrc.buffer) {
+        const newloopStart = (Tape1.audioSrc.loopStart/Tape1.audioSrc.buffer.duration)*100;
+        const newloopEnd = (Tape1.audioSrc.loopEnd/Tape1.audioSrc.buffer.duration)*100
         setCliplength(Tape1.audioSrc.buffer.duration)
-        setLoopstart((Tape1.audioSrc.loopStart/Tape1.audioSrc.buffer.duration)*100)
-        setLoopend((Tape1.audioSrc.loopEnd/Tape1.audioSrc.buffer.duration)*100)
+        setLoopstart(newloopStart)
+        setLoopend(newloopEnd)
     }
   },[Tape1.audioSrc])
 
+  // useEffect(() => {
+  //   setLoopend(Tape1.looplen)
+  //   const currtime = values[1]
+  //   setValues([loopstart,currtime,Tape1.looplen])
+  // },[Tape1.looplen])
+
+  // useEffect(() => {
+  //   const currtime = values[1]
+  //   setValues([loopstart,currtime,loopend])
+  // },[loopstart,loopend])
+
   useEffect(() => {
+    //Refactor so that time step is a constant sum and doesn't require the full calculation each time....
+    const refreshtime = 10;
     if (!Tape1.play) {
-        Tape1.audioCtx.suspend();
+        // Tape1.audioCtx.suspend();
         clearInterval(intervalID)
     }
     else {
         clearInterval(intervalID)
+        const loopend = Tape1.looplen + Tape1.loopstart
+        const loopstart = Tape1.loopstart
         const interval = setInterval(() => {
         // const moduloTime = ((((Tape1.audioCtx.currentTime-lastSpeedChange)*speed)+lastSpeedChange)/cliplength)*100 % (loopend-loopstart)
         const moduloTime = ((((Tape1.audioCtx.currentTime)*Tape1.speed))/cliplength)*100 % (loopend-loopstart)
         setValues([loopstart,((moduloTime)+loopstart),loopend])
-    }, 20)
+    }, refreshtime)
         setIntervalID(interval)
     }
-  },[Tape1.play,Tape1.speed])
+  },[Tape1.play,Tape1.speed,Tape1.looplen,Tape1.loopstart])
 
 //   const handleChange = (event: Event, newValue: number | number[]) => {
 //     setValues(newValue as number[]);

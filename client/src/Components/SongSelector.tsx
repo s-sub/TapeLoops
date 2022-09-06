@@ -4,7 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useStateValue, setSrc, setSpeedChangeTime } from '../state';
+import { useStateValue, setSrc, setSpeedChangeTime, setCtx,setPlay } from '../state';
 import { SongEntry } from '../types';
 
 import axios from "axios";
@@ -16,7 +16,7 @@ export default function SongMenu() {
 
     const handleChange = async (event: SelectChangeEvent) => {
         setSongID(event.target.value as string);
-        const audioCtx = Tape1.audioCtx;
+        // const audioCtx = Tape1.audioCtx;
         try {
             const matchingEntry = audiolist.find((song) => song.id === event.target.value);
             let matchingEntryID = "-1"
@@ -25,22 +25,33 @@ export default function SongMenu() {
                 `${apiBaseUrl}/songs/${matchingEntryID}`,
                 {responseType: 'arraybuffer'}
               );
+
+            //Below can be refactored/condensed with track re-initialize mechanics of speed adjust
+            const originalPlayState = Tape1.play;
+            if (originalPlayState) {Tape1.audioCtx.suspend()}
+            Tape1.audioCtx.close()
+            const audioCtx = new AudioContext()
+            await dispatch(setCtx(audioCtx))
+            await dispatch(setPlay(false))
             const source = audioCtx.createBufferSource();
-            //Verify that the below actually results in the old source being deleted from memoery
-            Tape1.audioSrc.disconnect();
+
             const audioBuffer = await audioCtx.decodeAudioData(songBuffer);
-            source.buffer = audioBuffer;
+            source.buffer = audioBuffer
             source.connect(audioCtx.destination);
             source.loop = true;
             const cliplength = audioBuffer.duration;
             source.loopStart = 0;
             source.loopEnd = cliplength;
-            // console.log('loopend',source.loopEnd,'cliplength',cliplength)
             source.playbackRate.value = Tape1.speed;
-            dispatch(setSpeedChangeTime(audioCtx.currentTime));
             source.start();
-            dispatch(setSrc(source));
             audioCtx.suspend();
+            dispatch(setSrc(source));
+
+            dispatch(setSpeedChangeTime(audioCtx.currentTime));        
+            if (originalPlayState) {
+                audioCtx.resume()
+                dispatch(setPlay(true))
+            }
 
         } catch (e: unknown) {
             if (axios.isAxiosError(e)) {

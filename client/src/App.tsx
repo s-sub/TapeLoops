@@ -3,6 +3,7 @@ import CassetteLoops from './Components/CassetteLoops'
 import SpeedAdjust from './Components/SpeedAdjust'
 import SongMenu from './Components/SongSelector';
 import RangeSlider from './Components/PlayBar';
+import ControlBar from './Components/ControlBar'
 import './App.css';
 import axios from "axios";
 import {Grid} from '@mui/material'
@@ -13,9 +14,9 @@ import {SongEntry} from './types'
 
 //To-do: 1) Fix smooth restart when song selection changes. 2) Add loop-adjustment capabilities
 function App() {
-  const [play, setPlay2] = useState(false)
+  // const [play, setPlay2] = useState(false)
   const [{Tape1}, dispatch] = useStateValue();
-  const audioCtx = Tape1.audioCtx;
+  // const audioCtx = Tape1.audioCtx;
 
   // useEffect(()=>{
   //   const source = audioCtx.createBufferSource();
@@ -61,15 +62,6 @@ function App() {
   //   console.log(Tape1.audioSrc.)
   // })
 
-  //All the below/above should be replaced when you set up the backend API endpoints for Audio retrieval 
-  const togglePlay = async () => {
-    await setPlay2(!play)
-    dispatch(setPlay(play))
-    play ? audioCtx.resume() : audioCtx.suspend();
-    const temp = play ? "running" : "paused"
-    document.documentElement.style.setProperty('--play', temp);
-  }
-
   return (
     <Grid
       container
@@ -89,7 +81,7 @@ function App() {
             </Grid>
           </Grid>
         </Grid>
-        <button onClick={togglePlay}> Play </button>
+        <ControlBar/>
         <SongMenu/>
       </div>
     </Grid>

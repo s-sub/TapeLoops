@@ -1,16 +1,7 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { SongEntry } from "../types";
+import { SongEntry, Tape } from "../types";
 
 import { Action } from "./reducer";
-
-type Tape = {
-    speed: number;
-    speedChangeTime: number;
-    play: boolean;
-    audio: string | null;
-    audioCtx: AudioContext;
-    audioSrc: AudioBufferSourceNode;
-}
 
 export type State = {
   Tape1: Tape;
@@ -20,7 +11,7 @@ export type State = {
 const audioContextConstructor = new AudioContext()
 
 const initialState: State = {
-  Tape1: {speed: 1, speedChangeTime: 0, play: false, audio: null, audioCtx: audioContextConstructor, audioSrc: audioContextConstructor.createBufferSource()},
+  Tape1: {speed: 1, speedChangeTime: 0, play: false, looplen: 100, loopstart: 0, audio: null, audioCtx: audioContextConstructor, audioSrc: audioContextConstructor.createBufferSource()},
   audiolist: [],
   // Src1: audioContextConstructor.createBufferSource(),
 };
