@@ -4,10 +4,17 @@
 }
 
 /* @media (prefers-reduced-motion: no-preference) { */
-.Nudge {
+.NudgeFwd {
     animation: spin infinite var(--animation-duration) linear;
     animation-play-state: var(--play);
 }
+
+.NudgeBack {
+    animation: spin infinite var(--animation-duration) linear;
+    animation-play-state: var(--play);
+    animation-direction: reverse;
+}
+
 /* } */
 
 @keyframes spin {

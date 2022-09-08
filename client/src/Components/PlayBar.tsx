@@ -1,5 +1,5 @@
 import {useState,useEffect} from 'react';
-import {useStateValue} from '../state'
+import {useStateValue, setSrc, setCtx, restartContext, setLoopstart} from '../state'
 import { styled, alpha} from '@mui/system';
 import SliderUnstyled, { sliderUnstyledClasses } from '@mui/base/SliderUnstyled';
 
@@ -125,14 +125,15 @@ const StyledSlider = styled(SliderUnstyled)(
 export default function RangeSlider() {
 
 
-  const [{Tape1},] = useStateValue();
+  const [{Tape1},dispatch] = useStateValue();
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const [intervalID, setIntervalID] = useState(setInterval(()=>{}));
   const [cliplength, setCliplength] = useState<number>(0);
-  const [loopstart,setLoopstart] = useState<number>(0);
+  const [loopstart,setLoopStart] = useState<number>(0);
   const [loopend,setLoopend] = useState<number>(100);
   const [values, setValues] = useState<number[]>([loopstart, loopstart, loopend]);
+  const [initialThumbMoved, setInitialThumbMoved] = useState<number>(-1);
 
 
   useEffect(() => {
@@ -140,7 +141,7 @@ export default function RangeSlider() {
         const newloopStart = (Tape1.audioSrc.loopStart/Tape1.audioSrc.buffer.duration)*100;
         const newloopEnd = (Tape1.audioSrc.loopEnd/Tape1.audioSrc.buffer.duration)*100
         setCliplength(Tape1.audioSrc.buffer.duration)
-        setLoopstart(newloopStart)
+        setLoopStart(newloopStart)
         setLoopend(newloopEnd)
     }
   },[Tape1.audioSrc])
@@ -159,37 +160,78 @@ export default function RangeSlider() {
   useEffect(() => {
     //Refactor so that time step is a constant sum and doesn't require the full calculation each time....
     const refreshtime = 10;
+    const loopend = Tape1.looplen + Tape1.loopstart;
+    const loopstart = Tape1.loopstart;
+    const oldvals = values.slice();
     if (!Tape1.play) {
         // Tape1.audioCtx.suspend();
         clearInterval(intervalID)
+        setValues([loopstart,oldvals[1],loopend])
     }
     else {
         clearInterval(intervalID)
-        const loopend = Tape1.looplen + Tape1.loopstart
-        const loopstart = Tape1.loopstart
+        // const oldvals = values.slice();
+        // const offset = oldvals[1];
         const interval = setInterval(() => {
         // const moduloTime = ((((Tape1.audioCtx.currentTime-lastSpeedChange)*speed)+lastSpeedChange)/cliplength)*100 % (loopend-loopstart)
-        const moduloTime = ((((Tape1.audioCtx.currentTime)*Tape1.speed))/cliplength)*100 % (loopend-loopstart)
+        const moduloTime = (((((Tape1.audioCtx.currentTime)*Tape1.speed))/cliplength)*100) % (loopend-loopstart)
         setValues([loopstart,((moduloTime)+loopstart),loopend])
     }, refreshtime)
         setIntervalID(interval)
     }
-  },[Tape1.play,Tape1.speed,Tape1.looplen,Tape1.loopstart])
+  },[Tape1.play,Tape1.looplen,Tape1.loopstart, Tape1.audioCtx, Tape1.audioSrc])
 
-//   const handleChange = (event: Event, newValue: number | number[]) => {
-//     setValues(newValue as number[]);
-//   };
+  const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {
+    const newValAsserted = newValue as number[];
+    let newstartval = 0, newendval = 100, newcurrval = 0;
+    if (activeThumb===1 && (newValAsserted[0]===0 || newValAsserted[2]===100)) {return}
+    const originalPlayState = Tape1.play;
+    if (originalPlayState) {
+        Tape1.audioCtx.suspend()
+        clearInterval(intervalID)
+    }
+    if (activeThumb !== 1 && initialThumbMoved === -1) {
+      setInitialThumbMoved(activeThumb)
+    }
+    if (initialThumbMoved===0) {
+      newstartval = Math.min(newValAsserted[activeThumb],100-Tape1.looplen)
+      newendval = Math.min(100,newstartval+Tape1.looplen)
+      newcurrval = Math.max(Math.min(newstartval,newendval), Math.min(Math.max(newstartval,newendval),newValAsserted[1]))
+      setValues([newstartval,newcurrval,newendval])
+    }
+    if (initialThumbMoved===2) {
+      newendval = Math.max(Tape1.looplen,newValAsserted[activeThumb])
+      newstartval = Math.max(0,newendval-Tape1.looplen)
+      newcurrval = Math.max(Math.min(newstartval,newendval), Math.min(Math.max(newstartval,newendval),newValAsserted[1]))
+      setValues([newstartval,newcurrval,newendval])
+    }
+  };
 
-//   const handleRelease = (event: Event, newValue: number | number[]) => {
-//     setValues(newValue as number[]);
-//   };
+  const handleRelease = (event: Event | React.SyntheticEvent<Element, Event>, newValue: number | number[]) => {
+    setInitialThumbMoved(-1)
+    const newValAsserted = newValue as number[];
+    const newLoopStart = (newValAsserted[0]/100)*cliplength;
+    const newLoopEnd = (newValAsserted[2]/100)*cliplength;
+    //Need to fix the interval for the below to work. For now, resets to  beginning of new interavl
+    // const timeOffset = (newValAsserted[1]/100) * cliplength;
+
+    const audioParams = {
+      loopStart: newLoopStart,
+      loopEnd: newLoopEnd,
+      // timeOffset: timeOffset
+    }
+    const {newaudioCtx: newaudioCtx, newaudioSrc: newaudioSrc} = restartContext(Tape1, audioParams);
+    dispatch(setLoopstart(newValAsserted[0]))
+    dispatch(setCtx(newaudioCtx))
+    dispatch(setSrc(newaudioSrc))
+  };
 
   return (
     <StyledSlider
         // defaultValue={[loopstart, 30, loopend]}
         value={values}
-        // onChange={handleChange}
-        // onChangeCommitted={handleRelease}
+        onChange={handleChange}
+        onChangeCommitted={handleRelease}
         min={0}
         max={100}
     />

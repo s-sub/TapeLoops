@@ -4,12 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {reducer, StateProvider} from "./state";
+// import { createRoot } from 'react-dom/client';
+// import * as ReactDOMClient from 'react-dom/client';
 
-// const root = ReactDOM.createRoot(
+// const root = ReactDOMClient.createRoot(
 //   document.getElementById('root') as HTMLElement
 // );
 // root.render(
-//     <App />
+//     <StateProvider reducer={reducer}>
+//       <App />
+//     </StateProvider>,
 // );
 
 ReactDOM.render(

@@ -76,7 +76,7 @@ function App() {
           <RangeSlider/>
           <Grid item xs={12}>
             <Grid container justifyContent="center" spacing={2}>
-            <Grid item xs={11}><CassetteLoops/></Grid>
+            <Grid item xs={11}><CassetteLoops looplen={Tape1.looplen}/></Grid>
             <Grid item xs={1}><SpeedAdjust/></Grid>
             </Grid>
           </Grid>

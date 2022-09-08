@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import { useStateValue, setSpeed_anim, setPlay, setSpeedChangeTime, setSrc, setCtx} from '../state';
+import { useStateValue, setSpeed_anim, setPlay, setSpeedChangeTime, setSrc, setCtx, restartContext} from '../state';
 
 export default function VerticalSlider() {
     
@@ -44,41 +44,14 @@ export default function VerticalSlider() {
         setValue(newValue as number);
     }
 
-    //Forced to mutate state directly since modifying shallow state copy doesn't seem to work in reducer...
     const handleChangeCommit = async () => {
-        // const audioCtx = Tape1.audioCtx;
-        const originalPlayState = Tape1.play;
-        if (originalPlayState) {Tape1.audioCtx.suspend()}
-        const currentBuffer = Tape1.audioSrc.buffer
-        const currentLoopStart = Tape1.audioSrc.loopStart
-        const currentLoopEnd = Tape1.audioSrc.loopEnd
+      
+        const audioParams = {speed: value/100}
+        dispatch(setSpeed_anim((value/100)));
+        const {newaudioCtx: newaudioCtx, newaudioSrc: newaudioSrc} = restartContext(Tape1, audioParams);
+        dispatch(setCtx(newaudioCtx))
+        dispatch(setSrc(newaudioSrc))
 
-        Tape1.audioCtx.close()
-        const audioCtx = new AudioContext()
-        dispatch(setCtx(audioCtx))
-        // Tape1.audioCtx.suspend()
-
-        await dispatch(setPlay(false))
-        await dispatch(setSpeed_anim((value/100)));
-        const source = audioCtx.createBufferSource();
-        //Verify that the below actually results in the old source being deleted from memoery
-        Tape1.audioSrc.disconnect();
-        source.buffer = currentBuffer;
-        source.connect(audioCtx.destination);
-        source.loop = true;
-        source.loopStart = currentLoopStart;
-        source.loopEnd = currentLoopEnd;
-        source.playbackRate.value = value/100;
-        source.start(0,currentLoopStart);
-        audioCtx.suspend()
-        dispatch(setSrc(source));
-
-        // Tape1.audioSrc.playbackRate.value = value/100
-        dispatch(setSpeedChangeTime(audioCtx.currentTime));        
-        if (originalPlayState) {
-          audioCtx.resume()
-          dispatch(setPlay(true))
-        }
     };
 
     const valuetext = (value: number) => {
