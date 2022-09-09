@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import express from 'express';
-import songsService from '../services/songlistService';
+// import songsService from '../services/songlistService';
 import { SongEntry } from '../types';
 // import type {Readable} from 'stream';
+import Audiofile from '../models/audiofiles';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
@@ -30,13 +31,15 @@ const router = express.Router();
 
 
 router.get('/', (_req, res) => {
-  res.send(songsService.getEntries());
+  void Audiofile.find({}).then(file => {
+      res.json(file);
+    });
 });
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 router.get('/:id', async (req,res) => {
   try {
-    const foundsong: SongEntry | undefined = songsService.getSong(req.params.id);
+    const foundsong: SongEntry | undefined | null = await Audiofile.findById(req.params.id);
     let foundkey;
     if (foundsong) {
       foundkey = foundsong.key;
