@@ -30,7 +30,6 @@ export default function SongMenu() {
             const {newaudioCtx: newaudioCtx, newaudioSrc: newaudioSrc} = restartContext(Tape1, audioParams);
             dispatch(setCtx(newaudioCtx))
             dispatch(setSrc(newaudioSrc))
-
         } catch (e: unknown) {
             if (axios.isAxiosError(e)) {
               console.error(e?.response?.data || "Unrecognized axios error");

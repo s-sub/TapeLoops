@@ -3,13 +3,15 @@ import CassetteLoops from './Components/CassetteLoops'
 import SpeedAdjust from './Components/SpeedAdjust'
 import SongMenu from './Components/SongSelector';
 import RangeSlider from './Components/PlayBar';
-import ControlBar from './Components/ControlBar'
+import ControlBar from './Components/ControlBar';
+import UploadButton from './Components/UploadButton';
 import './App.css';
 import axios from "axios";
 import {Grid} from '@mui/material'
 import {apiBaseUrl} from './constants'
 import { useStateValue, setPlay, setSongList } from './state';
 import {SongEntry} from './types'
+
 
 
 //To-do: 1) Fix smooth restart when song selection changes. 2) Add loop-adjustment capabilities
@@ -83,6 +85,7 @@ function App() {
         </Grid>
         <ControlBar/>
         <SongMenu/>
+        <UploadButton/>
       </div>
     </Grid>
   );
