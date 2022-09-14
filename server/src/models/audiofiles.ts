@@ -15,6 +15,10 @@ mongoose.connect(url)
 });
 
 const audiofileSchema = new mongoose.Schema({
+    cookieID: {
+        type: Number,
+        required: true
+    },
     song: {
         type: String,
         minLength: 3,

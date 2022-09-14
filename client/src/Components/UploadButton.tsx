@@ -1,5 +1,7 @@
 import Button from '@mui/material/Button';
 import { SetStateAction, useState } from 'react';
+import { useStateValue, setSongList } from '../state';
+import { SongEntry } from '../types';
 
 import axios from "axios";
 import {apiBaseUrl} from '../constants'
@@ -9,32 +11,47 @@ export default function UploadButton() {
     const [selectedFile, setSelectedFile] = useState<Blob | null>(null);
 	const [isFilePicked, setIsFilePicked] = useState(false);
     const [newName, setnewName] = useState("");
+    const [{audiolist}, dispatch] = useStateValue();
+    // const [{Tape1}] = useStateValue();
 
     const handleUpload = async () => {
         try {
             console.log('test', isFilePicked, selectedFile)
             if (isFilePicked && selectedFile) {
                 
-                // const blob = new Blob([selectedFile]);
                 // eslint-disable-next-line prefer-const
                 let formData = new FormData();
                 // const file = new File([blob],newName)
                 if (selectedFile) {formData.append('file',selectedFile,newName)}
+                // if (selectedFile) {formData.append('file',selectedFile.slice(0,1102974+32, 'audio/mpeg'),newName)}
+                formData.append('name',newName)
                 console.log('formdata',formData, typeof(formData))
 
                 // const contentLength = selectedFile.byteLength;
                 // console.log('POST',selectedFile, contentLength)
-                const { data: songBuffer } = await axios.post<FormData>(
-                    `${apiBaseUrl}/upload/${newName}`,
+                const { data: newID } = await axios.post<FormData>(
+                    `${apiBaseUrl}/upload/`,
                     formData,
-                    // {
-                    //     headers: {
-                    //     //   'Content-Type': 'multipart/form-data',
-                    //     //   'Content-Length': contentLength
-                    //     },
-                    // //     // responseType: 'arraybuffer'
-                    // }
-                  ); 
+                  );
+                
+                //To implement -> dropdown list to expand upon new upload
+                // console.log(newID, typeof(newID),'testtest');
+                // const newAudio : SongEntry = {
+                //     song: newName,
+                //     id: newID.toString(),
+                //     key: newName
+                // }
+
+                // console.log(newAudio.id)
+
+                // const newAudioList = audiolist.concat(newAudio);
+                // dispatch(setSongList(newAudioList))
+
+
+                // const { data: songListFromApi } = await axios.get<SongEntry[]>(
+                //     `${apiBaseUrl}/songs`
+                // );
+                // dispatch(setSongList(audiolist));
             }
         } catch (e: unknown) {
             if (axios.isAxiosError(e)) {
@@ -58,7 +75,8 @@ export default function UploadButton() {
                 const blob = new Blob([newfile],{type: 'audio/mpeg'})
                 setIsFilePicked(true);
                 setSelectedFile(blob)
-                setnewName(newfile.name.replace(/ /g,"_"));
+                console.log(newfile,'file');
+                setnewName(newfile.name);
             } catch (e: unknown) {
                 console.error(e);
             }

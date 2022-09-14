@@ -43,6 +43,8 @@ function App() {
   //   // console.log('dispatched:', Src1)
   // }, [])
 
+  axios.defaults.withCredentials = true;
+
   useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
 

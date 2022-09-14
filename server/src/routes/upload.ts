@@ -17,6 +17,7 @@ import { UploadedFile } from 'express-fileupload';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { S3Client} = require("@aws-sdk/client-s3");
+import Audiofile from '../models/audiofiles';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -37,7 +38,7 @@ const client = new S3Client({
 const router = express.Router();
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-router.post('/:name', async (req, res) => {
+router.post('/', async (req, res) => {
 
     try {
       if (!req.files || !req.files.file) {
@@ -45,20 +46,33 @@ router.post('/:name', async (req, res) => {
       }
       else {
         const filebuffer = req.files.file as UploadedFile;
-        // const blobbuffer = Readable.from(filebuffer.data);
+        // console.log(req.files.file);
+        
+        // const file = await Audiofile.find({$and: [{ key: req.body.name }, { cookieID: req.cookies.cookieName }]});
+        // if (!file) {
+        const {_id: newID} = await Audiofile.create({
+            cookieID: req.cookies.cookieName,
+            song: req.body.name,
+            key: req.body.name
+          });
+        // }
+
+        // console.log('mongooseret', returnval);
 
         await client.send(new PutObjectCommand({
           Bucket: bucketname,
-          Key: req.params.name,
+          Key: req.body.name,
           Body: filebuffer.data,
           ContentType: 'audio/mp3'
         }));
+
       console.log(
       "Successfully uploaded object: " +
         bucketname +
         "/" +
-        req.params.name
+        req.body.name
       );
+      res.send(newID.toString());
       }
     } catch (error: unknown) {
       let errorMessage = 'Something went wrong.';

@@ -30,8 +30,9 @@ const client = new S3Client({
 const router = express.Router();
 
 
-router.get('/', (_req, res) => {
-  void Audiofile.find({}).then(file => {
+router.get('/', (req, res) => {
+  console.log(req.cookies.cookieName);
+  void Audiofile.find({$or: [{ cookieID: -1 }, { cookieID: req.cookies.cookieName }]}).then(file => {
       res.json(file);
     });
 });

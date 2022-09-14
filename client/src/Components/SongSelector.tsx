@@ -1,14 +1,17 @@
 import * as React from 'react';
 // import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useStateValue, setSrc, setCtx, restartContext } from '../state';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import { useStateValue, setSrc, setCtx, restartContext, setSongList } from '../state';
 import { SongEntry } from '../types';
 
 import axios from "axios";
 import {apiBaseUrl} from '../constants'
+import Grid from '@mui/material/Grid';
 
 export default function SongMenu() {
     const [songID, setSongID] = React.useState('');
@@ -16,6 +19,8 @@ export default function SongMenu() {
 
     const handleChange = async (event: SelectChangeEvent) => {
         setSongID(event.target.value as string);
+        // console.log(audiolist.filter((song: SongEntry) => true))
+        console.log('songID', songID)
         try {
             const matchingEntry = audiolist.find((song) => song.id === event.target.value);
             let matchingEntryID = "-1"
@@ -39,6 +44,25 @@ export default function SongMenu() {
           }
     };
 
+    const handleDelete = async (id: string) => {
+        setSongID("")
+        try {
+            await axios.delete<string>(
+                `${apiBaseUrl}/delete/${id}`
+            );
+            
+            const newAudioList = audiolist.filter((song: SongEntry) => song.id !== id);
+            dispatch(setSongList(newAudioList))
+
+        } catch (e: unknown) {
+            if (axios.isAxiosError(e)) {
+              console.error(e?.response?.data || "Unrecognized axios error");
+            } else {
+              console.error("Unknown error", e);
+            }
+        }
+    };
+
 
 
     return(
@@ -52,7 +76,20 @@ export default function SongMenu() {
                 onChange={handleChange}
             >
             {audiolist.map((song: SongEntry) =>
-                <MenuItem key={song.id} value={song.id}>{song.song}</MenuItem>
+                {if (song.cookieID!==-1 && song.id) {
+                    return(
+                        <MenuItem key={song.id} value={song.id}>{song.song} 
+                            <ListItemSecondaryAction>
+                                <Button onClick={()=>handleDelete(song.id)}>Delete</Button>
+                            </ListItemSecondaryAction>      
+                        </MenuItem>
+                    )
+                    } else {
+                        return(
+                            <MenuItem key={song.id} value={song.id}>{song.song}</MenuItem>
+                        )
+                    }
+                }
             )};
             </Select>
         </FormControl>
