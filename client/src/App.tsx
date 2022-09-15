@@ -9,7 +9,7 @@ import './App.css';
 import axios from "axios";
 import {Grid} from '@mui/material'
 import {apiBaseUrl} from './constants'
-import { useStateValue, setPlay, setSongList } from './state';
+import { useStateValue, setPlay, setSongList, setExistingUser, setFlushFlag } from './state';
 import {SongEntry} from './types'
 
 
@@ -50,10 +50,18 @@ function App() {
 
     const fetchSongList = async () => {
       try {
-        const { data: songListFromApi } = await axios.get<SongEntry[]>(
+        const { data: {files: songListFromApi, existingUser: existingUser, flushFlag: flushFlag } } = await axios.get<{files: SongEntry[], existingUser: boolean, flushFlag: boolean}>(
           `${apiBaseUrl}/songs`
         );
         // console.log('songlistfromapi',songListFromApi);
+        // console.log(existingUser, flushFlag)
+        
+        if (existingUser) {
+            axios.put<void>(`${apiBaseUrl}/users/touch`)
+        }
+        dispatch(setExistingUser(existingUser))
+        dispatch(setFlushFlag(flushFlag))
+        console.log('existinguser', existingUser, 'flushflag', flushFlag)
         dispatch(setSongList(songListFromApi));
       } catch (e) {
         console.error(e);

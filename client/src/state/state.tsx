@@ -6,6 +6,8 @@ import { Action } from "./reducer";
 export type State = {
   Tape1: Tape;
   audiolist: Array<SongEntry>;
+  existingUser: boolean;
+  flushFlag: boolean;
 };
 
 const audioContextConstructor = new AudioContext()
@@ -13,6 +15,8 @@ const audioContextConstructor = new AudioContext()
 const initialState: State = {
   Tape1: {speed: 1, speedChangeTime: 0, play: false, looplen: 100, loopstart: 0, audio: null, audioCtx: audioContextConstructor, audioSrc: audioContextConstructor.createBufferSource(), audioBuffer: audioContextConstructor.createBuffer(1, 22050, 22050)},
   audiolist: [],
+  existingUser: false,
+  flushFlag: false
   // Src1: audioContextConstructor.createBufferSource(),
 };
 

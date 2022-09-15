@@ -4,7 +4,9 @@ import express from 'express';
 // import songsService from '../services/songlistService';
 import { SongEntry } from '../types';
 // import type {Readable} from 'stream';
-import Audiofile from '../models/audiofiles';
+// import Audiofile from '../models/audiofiles';
+import FileConnection from '../models/audiofiles';
+const Audiofile = FileConnection.model('Audiofile');
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
 const { S3Client, DeleteObjectCommand } = require("@aws-sdk/client-s3");

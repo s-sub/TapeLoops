@@ -4,6 +4,8 @@ import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from '@mui/icons-material/Delete';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import { useStateValue, setSrc, setCtx, restartContext, setSongList } from '../state';
@@ -21,6 +23,7 @@ export default function SongMenu() {
         setSongID(event.target.value as string);
         // console.log(audiolist.filter((song: SongEntry) => true))
         console.log('songID', songID)
+        if (songID==="") {return}
         try {
             const matchingEntry = audiolist.find((song) => song.id === event.target.value);
             let matchingEntryID = "-1"
@@ -45,13 +48,13 @@ export default function SongMenu() {
     };
 
     const handleDelete = async (id: string) => {
-        setSongID("")
         try {
             await axios.delete<string>(
                 `${apiBaseUrl}/delete/${id}`
             );
-            
+            setSongID("")
             const newAudioList = audiolist.filter((song: SongEntry) => song.id !== id);
+            console.log('newaud', newAudioList)
             dispatch(setSongList(newAudioList))
 
         } catch (e: unknown) {
@@ -80,7 +83,10 @@ export default function SongMenu() {
                     return(
                         <MenuItem key={song.id} value={song.id}>{song.song} 
                             <ListItemSecondaryAction>
-                                <Button onClick={()=>handleDelete(song.id)}>Delete</Button>
+                                {/* <Button >Delete</Button> */}
+                                <IconButton onClick={()=>handleDelete(song.id)} edge="end">
+                                    <DeleteIcon />
+                                </IconButton>
                             </ListItemSecondaryAction>      
                         </MenuItem>
                     )

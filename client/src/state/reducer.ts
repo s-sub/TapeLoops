@@ -33,10 +33,28 @@ export type Action =
   | {
     type: "SET_LOOPLEN";
     payload: number;
+  }
+  | {
+    type: "SET_EXISTING_USER_FLAG";
+    payload: boolean;
+  }
+  | {
+    type: "SET_FLUSH_FLAG";
+    payload: boolean;
   };
 
 export const reducer = (state: State, action: Action): State => {
     switch (action.type) {
+        case "SET_EXISTING_USER_FLAG":
+            return {
+                ...state,
+                existingUser: action.payload
+            };
+        case "SET_FLUSH_FLAG":
+            return {
+                ...state,
+                flushFlag: action.payload
+            };
         case "SET_SPEED_ANIM":
             return {
                 ...state,
@@ -147,6 +165,14 @@ export const setLoopstart = (loopstart: number): Action => {
 
 export const setLooplen = (looplen: number): Action => {    
     return {type: "SET_LOOPLEN", payload: looplen};
+};
+
+export const setExistingUser = (existingUser: boolean): Action => {    
+    return {type: "SET_EXISTING_USER_FLAG", payload: existingUser};
+};
+
+export const setFlushFlag = (flushFlag: boolean): Action => {    
+    return {type: "SET_FLUSH_FLAG", payload: flushFlag};
 };
 
 // export const setSpeed_playback = (speed:number, audio: AudioBufferSourceNode, context: AudioContext): Action => {

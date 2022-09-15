@@ -3,6 +3,7 @@ import cors from "cors";
 import songsRouter from './routes/songlist';
 import uploadRouter from './routes/upload';
 import deleteRouter from './routes/delete';
+import usersRouter from './routes/users';
 // import Audiofile from './models/audiofiles';
 import fileUpload from 'express-fileupload';
 import cookieParser from "cookie-parser";
@@ -36,6 +37,7 @@ app.get('/api/ping', (_req, res) => {
   res.send('pong');
 });
 
+app.use('/api/users',usersRouter);
 app.use('/api/songs',songsRouter);
 app.use('/api/upload',uploadRouter);
 app.use('/api/delete', deleteRouter);

@@ -1,20 +1,30 @@
+// import { connect } from 'http2';
 import mongoose from 'mongoose';
+import {SongDoc} from '../types';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-var-requires
 require('dotenv').config();
 
-const url = process.env.MONGODB_URI as string;
+const url = process.env.MONGODB_URI_FILES as string;
 
 console.log('connecting to', url);
 
-mongoose.connect(url)
-    .then(() => {
-        console.log('Connected to MongoDB');
-})
-.catch((error) => {
-    console.log('error connecting to MongoDB:', error.message);
-});
+// mongoose.connect(url)
+//     .then(() => {
+//         console.log('Connected to MongoDB - Files');
+// })
+// .catch((error) => {
+//     console.log('error connecting to MongoDB - Files:', error.message);
+// });
 
-const audiofileSchema = new mongoose.Schema({
+
+const conn = mongoose.createConnection(url);
+if (conn) {
+    console.log('Connected to MongoDB - Files');
+} else {
+    console.log('error connecting to MongoDB - Files:');
+}
+
+const audiofileSchema = new mongoose.Schema<SongDoc>({
     cookieID: {
         type: Number,
         required: true
@@ -40,4 +50,8 @@ audiofileSchema.set('toJSON', {
     }
 });
 
-export default mongoose.model('Audiofile', audiofileSchema);
+conn.model<SongDoc>('Audiofile', audiofileSchema);
+
+export function AudiofileGen(mongooseConnection: mongoose.Connection) { return mongooseConnection.model<SongDoc>('Audiofile', audiofileSchema); }
+// export default mongoose.model('Audiofile', audiofileSchema);
+export default conn;

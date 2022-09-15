@@ -17,7 +17,9 @@ import { UploadedFile } from 'express-fileupload';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { S3Client} = require("@aws-sdk/client-s3");
-import Audiofile from '../models/audiofiles';
+// import Audiofile from '../models/audiofiles';
+import FileConnection from '../models/audiofiles';
+const Audiofile = FileConnection.model('Audiofile');
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-var-requires
 require('dotenv').config();

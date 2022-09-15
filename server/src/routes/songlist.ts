@@ -4,7 +4,12 @@ import express from 'express';
 // import songsService from '../services/songlistService';
 import { SongEntry } from '../types';
 // import type {Readable} from 'stream';
-import Audiofile from '../models/audiofiles';
+// import Audiofile from '../models/audiofiles';
+import UserConnection from '../models/userlist';
+import FileConnection from '../models/audiofiles';
+const Audiofile = FileConnection.model('Audiofile');
+// console.log(UserConnection);
+const Userfile = UserConnection.model('Userfile');
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
@@ -16,6 +21,7 @@ require('dotenv').config();
 const accesskey: string = process.env.S3_ACCESS_KEY_ID as string;
 const secret: string = process.env.SECRET_ACCESS_KEY as string;
 const bucketname: string = process.env.BUCKET_NAME as string;
+const maxUsers : string = process.env.MAX_USERS as string;
 
 
 const client = new S3Client({
@@ -30,11 +36,20 @@ const client = new S3Client({
 const router = express.Router();
 
 
-router.get('/', (req, res) => {
-  console.log(req.cookies.cookieName);
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
+router.get('/', async (req, res) => {
+  let userExists = false;
+  const numUsers = await Userfile.countDocuments();
+  const userID = await Userfile.exists({ cookieID: req.cookies.cookieName });
+  // if (userID) {userIDStr = userID._id.toHexString();}
+  if (userID) {userExists = true;} else {userExists = false;}
+
+  const userFlushNeededOnUpload = (!userExists && numUsers>=(+maxUsers));
+
   void Audiofile.find({$or: [{ cookieID: -1 }, { cookieID: req.cookies.cookieName }]}).then(file => {
-      res.json(file);
+      res.json({files: file, existingUser: userExists, flushFlag: userFlushNeededOnUpload});
     });
+
 });
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -50,8 +65,6 @@ router.get('/:id', async (req,res) => {
       Bucket: bucketname,
       Key: foundkey
     });
-
-    console.log('command', command);
 
     const item = await client.send(command);
     item.Body.pipe(res);
