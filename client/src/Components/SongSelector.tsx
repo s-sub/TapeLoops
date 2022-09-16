@@ -21,9 +21,7 @@ export default function SongMenu() {
 
     const handleChange = async (event: SelectChangeEvent) => {
         setSongID(event.target.value as string);
-        // console.log(audiolist.filter((song: SongEntry) => true))
-        console.log('songID', songID)
-        if (songID==="") {return}
+        if (event.target.value==="") {return}
         try {
             const matchingEntry = audiolist.find((song) => song.id === event.target.value);
             let matchingEntryID = "-1"

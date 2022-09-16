@@ -2,6 +2,33 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { useStateValue, setSpeed_anim, setPlay, setSpeedChangeTime, setSrc, setCtx, restartContext} from '../state';
+import { styled, alpha, createTheme} from '@mui/system';
+
+
+// const green500 = "#228b22";
+// const green900 = "#7FFF00";
+const customTheme = createTheme({
+  typography: {
+    fontFamily: 'Courier'}
+});
+
+const CustomSlider = styled(Slider)(({ theme }) => ({
+  color: "#DDD6CE",
+  "& .MuiSlider-thumb": {
+    backgroundColor: "#FF926B", //color of thumbs
+    radius: 30
+  },
+  "& .MuiSlider-rail": {
+    color: '#cfc5c2' ////color of the slider outside  teh area between thumbs
+  },
+  "& .MuiSlider-track": {
+    color: '#cfc5c2' ////color of the slider outside  teh area between thumbs
+  },
+  "& .MuiSlider-markLabel": {
+    color: "black" ////color of the slider outside  teh area between thumbs
+  }
+  
+}));
 
 export default function VerticalSlider() {
     
@@ -21,7 +48,7 @@ export default function VerticalSlider() {
         },
         {
           value: 100,
-          label: '0x',
+          label: '1x',
         },
         {
           value: 108,
@@ -60,8 +87,8 @@ export default function VerticalSlider() {
     }
 
     return (
-        <Box sx={{ height: 1 }}>
-        <Slider
+        // <Box sx={{ height: 0.8, justifyContent: "center"}}>
+        <CustomSlider theme={customTheme}
             sx={{
             '& input[type="range"]': {
                 WebkitAppearance: 'slider-vertical',
@@ -79,6 +106,6 @@ export default function VerticalSlider() {
             onChange={handleChange}
             onChangeCommitted={handleChangeCommit}
         />
-        </Box>
+        // </Box>
     );
 }

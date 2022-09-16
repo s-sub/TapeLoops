@@ -6,46 +6,46 @@ const CassetteDrawing4 = () => {
     return (
         <svg className="Cassette" viewBox="0 0 1632 1008" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="Case">
-            <rect id="Frame" x="14" y="2" width="1604" height="1004" rx="42" fill="white" stroke="black" strokeWidth="4"/>
-            <rect id="Rectangle 3" x="1618" y="616" width="12" height="286" fill="white" stroke="black" strokeWidth="4"/>
-            <rect id="Rectangle 4" x="2" y="616" width="12" height="286" fill="white" stroke="black" strokeWidth="4"/>
-            <rect id="Labelwindow" x="648" y="361" width="311" height="167" fill="white" stroke="black" strokeWidth="4"/>
-            <path id="Base" d="M1324 1006H1326.52L1325.95 1003.54L1275.82 789.293C1270.85 768.035 1251.89 753 1230.06 753H377.942C356.11 753 337.152 768.035 332.178 789.293L282.053 1003.54L281.478 1006H284H1324Z" fill="white" stroke="black" strokeWidth="4"/>
+            <rect id="Frame" x="14" y="2" width="1604" height="1004" rx="42" fill="none" stroke="black" strokeWidth="4"/>
+            <rect id="Rectangle 3" x="1618" y="616" width="12" height="286" fill="none" stroke="black" strokeWidth="4"/>
+            <rect id="Rectangle 4" x="2" y="616" width="12" height="286" fill="none" stroke="black" strokeWidth="4"/>
+            <rect id="Labelwindow" x="648" y="361" width="311" height="167" fill="none" stroke="black" strokeWidth="4"/>
+            <path id="Base" d="M1324 1006H1326.52L1325.95 1003.54L1275.82 789.293C1270.85 768.035 1251.89 753 1230.06 753H377.942C356.11 753 337.152 768.035 332.178 789.293L282.053 1003.54L281.478 1006H284H1324Z" fill="none" stroke="black" strokeWidth="4"/>
             <g id="Screws">
             <g id="Screw">
-            <circle id="Ellipse 1" cx="59.5" cy="59.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1" cx="59.5" cy="59.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1" x1="59" y1="38" x2="59" y2="81" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2" x1="38" y1="60" x2="81" y2="60" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_2">
-            <circle id="Ellipse 1_2" cx="1547.5" cy="59.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_2" cx="1547.5" cy="59.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1_2" x1="1547" y1="38" x2="1547" y2="81" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_2" x1="1526" y1="60" x2="1569" y2="60" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_3">
-            <circle id="Ellipse 1_3" cx="59.5" cy="948.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_3" cx="59.5" cy="948.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1_3" x1="59" y1="927" x2="59" y2="970" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_3" x1="38" y1="949" x2="81" y2="949" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_4">
-            <circle id="Ellipse 1_4" cx="1547.5" cy="948.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_4" cx="1547.5" cy="948.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1_4" x1="1547" y1="927" x2="1547" y2="970" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_4" x1="1526" y1="949" x2="1569" y2="949" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_5">
-            <circle id="Ellipse 1_5" cx="804.15" cy="826.151" r="27" transform="rotate(-22 804.15 826.151)" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_5" cx="804.15" cy="826.151" r="27" transform="rotate(-22 804.15 826.151)" fill="none" stroke="black" strokeWidth="4"/>
             <path id="Line 1_5" d="M798.532 812.08L809.77 839.896" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_5" x1="790.629" y1="831.451" x2="817.559" y2="820.571" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             </g>
-            <circle id="Ellipse 22" cx="592" cy="912" r="31" fill="white" stroke="black" strokeWidth="4"/>
-            <circle id="Ellipse 21" cx="1015" cy="912" r="31" fill="white" stroke="black" strokeWidth="4"/>
-            <circle id="Ellipse 20" cx="1187.5" cy="948.5" r="38.5" fill="white" stroke="black" strokeWidth="4"/>
-            <circle id="Ellipse 19" cx="435.5" cy="948.5" r="38.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 22" cx="592" cy="912" r="31" fill="none" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 21" cx="1015" cy="912" r="31" fill="none" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 20" cx="1187.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 19" cx="435.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
             </g>
-            <circle id="Nudge 2" cx="505.5" cy="444.5" r="88.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Nudge 2" cx="505.5" cy="444.5" r="88.5" fill="none" stroke="black" strokeWidth="4"/>
             <g id="Nudge 1" className="NudgeFwd">
-            <circle id="Ellipse 3" cx="1101.5" cy="444.5" r="107.5" fill="white" stroke="black" strokeWidth="42"/>
+            <circle id="Ellipse 3" cx="1101.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
             <g id="Ridges">
             <path id="Ellipse 4" d="M1179.71 467.434C1181.89 459.985 1183 452.263 1183 444.5" stroke="black" strokeWidth="10"/>
             <path id="Ellipse 6" d="M1154.89 506.078C1160.75 500.993 1165.86 495.096 1170.06 488.565" stroke="black" strokeWidth="10"/>
@@ -81,45 +81,45 @@ const CassetteDrawing1 = () => {
         <svg className="Cassette" viewBox="0 0 1632 1008" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* <rect width="1632" height="1008" fill="#F5F5F5"/> */}
             <g id="Case">
-            <rect id="Frame" x="14" y="2" width="1604" height="1004" rx="42" fill="white" stroke="black" strokeWidth="4"/>
-            <rect id="Rectangle 3" x="1618" y="616" width="12" height="286" fill="white" stroke="black" strokeWidth="4"/>
-            <rect id="Rectangle 4" x="2" y="616" width="12" height="286" fill="white" stroke="black" strokeWidth="4"/>
-            <rect id="Labelwindow" x="648" y="361" width="311" height="167" fill="white" stroke="black" strokeWidth="4"/>
-            <path id="Base" d="M1324 1006H1326.52L1325.95 1003.54L1275.82 789.293C1270.85 768.035 1251.89 753 1230.06 753H377.942C356.11 753 337.152 768.035 332.178 789.293L282.053 1003.54L281.478 1006H284H1324Z" fill="white" stroke="black" strokeWidth="4"/>
+            <rect id="Frame" x="14" y="2" width="1604" height="1004" rx="42" fill="none" stroke="black" strokeWidth="4"/>
+            <rect id="Rectangle 3" x="1618" y="616" width="12" height="286" fill="none" stroke="black" strokeWidth="4"/>
+            <rect id="Rectangle 4" x="2" y="616" width="12" height="286" fill="none" stroke="black" strokeWidth="4"/>
+            <rect id="Labelwindow" x="648" y="361" width="311" height="167" fill="none" stroke="black" strokeWidth="4"/>
+            <path id="Base" d="M1324 1006H1326.52L1325.95 1003.54L1275.82 789.293C1270.85 768.035 1251.89 753 1230.06 753H377.942C356.11 753 337.152 768.035 332.178 789.293L282.053 1003.54L281.478 1006H284H1324Z" fill="none" stroke="black" strokeWidth="4"/>
             <g id="Screws">
             <g id="Screw">
-            <circle id="Ellipse 1" cx="59.5" cy="59.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1" cx="59.5" cy="59.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1" x1="59" y1="38" x2="59" y2="81" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2" x1="38" y1="60" x2="81" y2="60" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_2">
-            <circle id="Ellipse 1_2" cx="1547.5" cy="59.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_2" cx="1547.5" cy="59.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1_2" x1="1547" y1="38" x2="1547" y2="81" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_2" x1="1526" y1="60" x2="1569" y2="60" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_3">
-            <circle id="Ellipse 1_3" cx="59.5" cy="948.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_3" cx="59.5" cy="948.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1_3" x1="59" y1="927" x2="59" y2="970" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_3" x1="38" y1="949" x2="81" y2="949" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_4">
-            <circle id="Ellipse 1_4" cx="1547.5" cy="948.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_4" cx="1547.5" cy="948.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1_4" x1="1547" y1="927" x2="1547" y2="970" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_4" x1="1526" y1="949" x2="1569" y2="949" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_5">
-            <circle id="Ellipse 1_5" cx="804.15" cy="826.151" r="27" transform="rotate(-22 804.15 826.151)" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_5" cx="804.15" cy="826.151" r="27" transform="rotate(-22 804.15 826.151)" fill="none" stroke="black" strokeWidth="4"/>
             <path id="Line 1_5" d="M798.532 812.08L809.77 839.896" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_5" x1="790.629" y1="831.451" x2="817.559" y2="820.571" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             </g>
-            <circle id="Ellipse 22" cx="592" cy="912" r="31" fill="white" stroke="black" strokeWidth="4"/>
-            <circle id="Ellipse 21" cx="1015" cy="912" r="31" fill="white" stroke="black" strokeWidth="4"/>
-            <circle id="Ellipse 20" cx="1187.5" cy="948.5" r="38.5" fill="white" stroke="black" strokeWidth="4"/>
-            <circle id="Ellipse 19" cx="435.5" cy="948.5" r="38.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 22" cx="592" cy="912" r="31" fill="none" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 21" cx="1015" cy="912" r="31" fill="none" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 20" cx="1187.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 19" cx="435.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
             </g>
             <g id="Nudge 3" className="NudgeBack">
-                <circle id="Ellipse 3" cx="505.5" cy="444.5" r="107.5" fill="white" stroke="black" strokeWidth="42"/>
+                <circle id="Ellipse 3" cx="505.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
                 <g id="Ridges">
                 <path id="Ellipse 4" d="M583.707 467.434C585.891 459.985 587 452.263 587 444.5" stroke="black" strokeWidth="10"/>
                 <path id="Ellipse 6" d="M558.889 506.078C564.754 500.993 569.863 495.096 574.06 488.565" stroke="black" strokeWidth="10"/>
@@ -136,7 +136,7 @@ const CassetteDrawing1 = () => {
             </g>
             </g>
             <g id="Nudge 1" className="NudgeFwd">
-                <circle id="Ellipse 3_2" cx="1101.5" cy="444.5" r="107.5" fill="white" stroke="black" strokeWidth="42"/>
+                <circle id="Ellipse 3_2" cx="1101.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
                 <g id="Ridges_2">
                 <path id="Ellipse 4_2" d="M1179.71 467.434C1181.89 459.985 1183 452.263 1183 444.5" stroke="black" strokeWidth="10"/>
                 <path id="Ellipse 6_2" d="M1154.89 506.078C1160.75 500.993 1165.86 495.096 1170.06 488.565" stroke="black" strokeWidth="10"/>
@@ -179,45 +179,45 @@ const CassetteDrawing2 = () => {
     return (
         <svg className="Cassette" viewBox="0 0 1632 1008" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="Case">
-            <rect id="Frame" x="14" y="2" width="1604" height="1004" rx="42" fill="white" stroke="black" strokeWidth="4"/>
-            <rect id="Rectangle 3" x="1618" y="616" width="12" height="286" fill="white" stroke="black" strokeWidth="4"/>
-            <rect id="Rectangle 4" x="2" y="616" width="12" height="286" fill="white" stroke="black" strokeWidth="4"/>
-            <rect id="Labelwindow" x="648" y="361" width="311" height="167" fill="white" stroke="black" strokeWidth="4"/>
-            <path id="Base" d="M1324 1006H1326.52L1325.95 1003.54L1275.82 789.293C1270.85 768.035 1251.89 753 1230.06 753H377.942C356.11 753 337.152 768.035 332.178 789.293L282.053 1003.54L281.478 1006H284H1324Z" fill="white" stroke="black" strokeWidth="4"/>
+            <rect id="Frame" x="14" y="2" width="1604" height="1004" rx="42" fill="none" stroke="black" strokeWidth="4"/>
+            <rect id="Rectangle 3" x="1618" y="616" width="12" height="286" fill="none" stroke="black" strokeWidth="4"/>
+            <rect id="Rectangle 4" x="2" y="616" width="12" height="286" fill="none" stroke="black" strokeWidth="4"/>
+            <rect id="Labelwindow" x="648" y="361" width="311" height="167" fill="none" stroke="black" strokeWidth="4"/>
+            <path id="Base" d="M1324 1006H1326.52L1325.95 1003.54L1275.82 789.293C1270.85 768.035 1251.89 753 1230.06 753H377.942C356.11 753 337.152 768.035 332.178 789.293L282.053 1003.54L281.478 1006H284H1324Z" fill="none" stroke="black" strokeWidth="4"/>
             <g id="Screws">
             <g id="Screw">
-            <circle id="Ellipse 1" cx="59.5" cy="59.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1" cx="59.5" cy="59.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1" x1="59" y1="38" x2="59" y2="81" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2" x1="38" y1="60" x2="81" y2="60" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_2">
-            <circle id="Ellipse 1_2" cx="1547.5" cy="59.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_2" cx="1547.5" cy="59.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1_2" x1="1547" y1="38" x2="1547" y2="81" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_2" x1="1526" y1="60" x2="1569" y2="60" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_3">
-            <circle id="Ellipse 1_3" cx="59.5" cy="948.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_3" cx="59.5" cy="948.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1_3" x1="59" y1="927" x2="59" y2="970" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_3" x1="38" y1="949" x2="81" y2="949" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_4">
-            <circle id="Ellipse 1_4" cx="1547.5" cy="948.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_4" cx="1547.5" cy="948.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1_4" x1="1547" y1="927" x2="1547" y2="970" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_4" x1="1526" y1="949" x2="1569" y2="949" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_5">
-            <circle id="Ellipse 1_5" cx="804.15" cy="826.151" r="27" transform="rotate(-22 804.15 826.151)" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_5" cx="804.15" cy="826.151" r="27" transform="rotate(-22 804.15 826.151)" fill="none" stroke="black" strokeWidth="4"/>
             <path id="Line 1_5" d="M798.532 812.08L809.77 839.896" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_5" x1="790.629" y1="831.451" x2="817.559" y2="820.571" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             </g>
-            <circle id="Ellipse 22" cx="592" cy="912" r="31" fill="white" stroke="black" strokeWidth="4"/>
-            <circle id="Ellipse 21" cx="1015" cy="912" r="31" fill="white" stroke="black" strokeWidth="4"/>
-            <circle id="Ellipse 20" cx="1187.5" cy="948.5" r="38.5" fill="white" stroke="black" strokeWidth="4"/>
-            <circle id="Ellipse 19" cx="435.5" cy="948.5" r="38.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 22" cx="592" cy="912" r="31" fill="none" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 21" cx="1015" cy="912" r="31" fill="none" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 20" cx="1187.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 19" cx="435.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
             </g>
             <g id="Nudge 3" className="NudgeBack">
-            <circle id="Ellipse 3" cx="505.5" cy="444.5" r="107.5" fill="white" stroke="black" strokeWidth="42"/>
+            <circle id="Ellipse 3" cx="505.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
             <g id="Ridges">
             <path id="Ellipse 4" d="M583.707 467.434C585.891 459.985 587 452.263 587 444.5" stroke="black" strokeWidth="10"/>
             <path id="Ellipse 6" d="M558.889 506.078C564.754 500.993 569.863 495.096 574.06 488.565" stroke="black" strokeWidth="10"/>
@@ -234,7 +234,7 @@ const CassetteDrawing2 = () => {
             </g>
             </g>
             <g id="Nudge 1" className="NudgeFwd">
-            <circle id="Ellipse 3_2" cx="1101.5" cy="444.5" r="107.5" fill="white" stroke="black" strokeWidth="42"/>
+            <circle id="Ellipse 3_2" cx="1101.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
             <g id="Ridges_2">
             <path id="Ellipse 4_2" d="M1179.71 467.434C1181.89 459.985 1183 452.263 1183 444.5" stroke="black" strokeWidth="10"/>
             <path id="Ellipse 6_2" d="M1154.89 506.078C1160.75 500.993 1165.86 495.096 1170.06 488.565" stroke="black" strokeWidth="10"/>
@@ -270,45 +270,45 @@ const CassetteDrawing3 = () => {
     return (
         <svg className="Cassette" viewBox="0 0 1632 1008" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="Case">
-            <rect id="Frame" x="14" y="2" width="1604" height="1004" rx="42" fill="white" stroke="black" strokeWidth="4"/>
-            <rect id="Rectangle 3" x="1618" y="616" width="12" height="286" fill="white" stroke="black" strokeWidth="4"/>
-            <rect id="Rectangle 4" x="2" y="616" width="12" height="286" fill="white" stroke="black" strokeWidth="4"/>
-            <rect id="Labelwindow" x="648" y="361" width="311" height="167" fill="white" stroke="black" strokeWidth="4"/>
-            <path id="Base" d="M1324 1006H1326.52L1325.95 1003.54L1275.82 789.293C1270.85 768.035 1251.89 753 1230.06 753H377.942C356.11 753 337.152 768.035 332.178 789.293L282.053 1003.54L281.478 1006H284H1324Z" fill="white" stroke="black" strokeWidth="4"/>
+            <rect id="Frame" x="14" y="2" width="1604" height="1004" rx="42" fill="none" stroke="black" strokeWidth="4"/>
+            <rect id="Rectangle 3" x="1618" y="616" width="12" height="286" fill="none" stroke="black" strokeWidth="4"/>
+            <rect id="Rectangle 4" x="2" y="616" width="12" height="286" fill="none" stroke="black" strokeWidth="4"/>
+            <rect id="Labelwindow" x="648" y="361" width="311" height="167" fill="none" stroke="black" strokeWidth="4"/>
+            <path id="Base" d="M1324 1006H1326.52L1325.95 1003.54L1275.82 789.293C1270.85 768.035 1251.89 753 1230.06 753H377.942C356.11 753 337.152 768.035 332.178 789.293L282.053 1003.54L281.478 1006H284H1324Z" fill="none" stroke="black" strokeWidth="4"/>
             <g id="Screws">
             <g id="Screw">
-            <circle id="Ellipse 1" cx="59.5" cy="59.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1" cx="59.5" cy="59.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1" x1="59" y1="38" x2="59" y2="81" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2" x1="38" y1="60" x2="81" y2="60" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_2">
-            <circle id="Ellipse 1_2" cx="1547.5" cy="59.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_2" cx="1547.5" cy="59.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1_2" x1="1547" y1="38" x2="1547" y2="81" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_2" x1="1526" y1="60" x2="1569" y2="60" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_3">
-            <circle id="Ellipse 1_3" cx="59.5" cy="948.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_3" cx="59.5" cy="948.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1_3" x1="59" y1="927" x2="59" y2="970" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_3" x1="38" y1="949" x2="81" y2="949" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_4">
-            <circle id="Ellipse 1_4" cx="1547.5" cy="948.5" r="35.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_4" cx="1547.5" cy="948.5" r="35.5" fill="none" stroke="black" strokeWidth="4"/>
             <line id="Line 1_4" x1="1547" y1="927" x2="1547" y2="970" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_4" x1="1526" y1="949" x2="1569" y2="949" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             <g id="Screw_5">
-            <circle id="Ellipse 1_5" cx="804.15" cy="826.151" r="27" transform="rotate(-22 804.15 826.151)" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 1_5" cx="804.15" cy="826.151" r="27" transform="rotate(-22 804.15 826.151)" fill="none" stroke="black" strokeWidth="4"/>
             <path id="Line 1_5" d="M798.532 812.08L809.77 839.896" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             <line id="Line 2_5" x1="790.629" y1="831.451" x2="817.559" y2="820.571" stroke="black" strokeWidth="12" strokeLinecap="round"/>
             </g>
             </g>
-            <circle id="Ellipse 22" cx="592" cy="912" r="31" fill="white" stroke="black" strokeWidth="4"/>
-            <circle id="Ellipse 21" cx="1015" cy="912" r="31" fill="white" stroke="black" strokeWidth="4"/>
-            <circle id="Ellipse 20" cx="1187.5" cy="948.5" r="38.5" fill="white" stroke="black" strokeWidth="4"/>
-            <circle id="Ellipse 19" cx="435.5" cy="948.5" r="38.5" fill="white" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 22" cx="592" cy="912" r="31" fill="none" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 21" cx="1015" cy="912" r="31" fill="none" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 20" cx="1187.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
+            <circle id="Ellipse 19" cx="435.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
             </g>
             <g id="Nudge 3" className="NudgeFwd">
-            <circle id="Ellipse 3" cx="505.5" cy="444.5" r="107.5" fill="white" stroke="black" strokeWidth="42"/>
+            <circle id="Ellipse 3" cx="505.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
             <g id="Ridges">
             <path id="Ellipse 4" d="M583.707 467.434C585.891 459.985 587 452.263 587 444.5" stroke="black" strokeWidth="10"/>
             <path id="Ellipse 6" d="M558.889 506.078C564.754 500.993 569.863 495.096 574.06 488.565" stroke="black" strokeWidth="10"/>
@@ -325,7 +325,7 @@ const CassetteDrawing3 = () => {
             </g>
             </g>
             <g id="Nudge 1" className="NudgeFwd">
-            <circle id="Ellipse 3_2" cx="1101.5" cy="444.5" r="107.5" fill="white" stroke="black" strokeWidth="42"/>
+            <circle id="Ellipse 3_2" cx="1101.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
             <g id="Ridges_2">
             <path id="Ellipse 4_2" d="M1179.71 467.434C1181.89 459.985 1183 452.263 1183 444.5" stroke="black" strokeWidth="10"/>
             <path id="Ellipse 6_2" d="M1154.89 506.078C1160.75 500.993 1165.86 495.096 1170.06 488.565" stroke="black" strokeWidth="10"/>

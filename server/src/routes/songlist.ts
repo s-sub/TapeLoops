@@ -70,7 +70,7 @@ router.get('/:id', async (req,res) => {
     item.Body.pipe(res);
     // const stream = item.Body as Readable;
     // console.log(stream);
-
+    
 
   } catch (error: unknown) {
     let errorMessage = 'Something went wrong.';

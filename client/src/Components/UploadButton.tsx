@@ -82,7 +82,6 @@ export default function UploadButton() {
                       );
                     dispatch(setFlushFlag(false));
                     dispatch(setExistingUser(true));
-                    console.log('returndata?', newID)
                 }
 
                 const { data: newID } = await axios.post<FormData>(
@@ -96,8 +95,6 @@ export default function UploadButton() {
                     id: newID.toString(),
                     key: newName
                 }
-
-                console.log(newAudio.id)
 
                 const newAudioList = audiolist.concat([newAudio]);
                 dispatch(setSongList(newAudioList))

@@ -1,6 +1,7 @@
 .Cassette {
-    width: 100%;
+    width: auto;
     height: auto;
+    background-color: #f5dec6;
 }
 
 /* @media (prefers-reduced-motion: no-preference) { */

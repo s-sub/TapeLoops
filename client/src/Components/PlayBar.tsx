@@ -55,7 +55,7 @@ const StyledSlider = styled(SliderUnstyled)(
     width: 100%;
     height: 12px;
     border-radius: 2px;
-    background-color: currentColor;
+    background-color: #ada4a1;
     opacity: 0.4;
   }
 
@@ -64,7 +64,7 @@ const StyledSlider = styled(SliderUnstyled)(
     position: absolute;
     height: 12px;
     border-radius: 2px;
-    background-color: currentColor;
+    background-color: #FF926B;
   }
 
   & .${sliderUnstyledClasses.thumb} {
@@ -129,12 +129,13 @@ export default function RangeSlider() {
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const [intervalID, setIntervalID] = useState(setInterval(()=>{}));
-  const [cliplength, setCliplength] = useState<number>(0);
+  const [cliplength, setCliplength] = useState<number>(1);
   const [loopstart,setLoopStart] = useState<number>(0);
   const [loopend,setLoopend] = useState<number>(100);
   const [values, setValues] = useState<number[]>([loopstart, loopstart, loopend]);
   const [initialThumbMoved, setInitialThumbMoved] = useState<number>(-1);
 
+  
 
   useEffect(() => {
     if (Tape1.audioSrc.buffer) {

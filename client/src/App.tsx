@@ -5,43 +5,33 @@ import SongMenu from './Components/SongSelector';
 import RangeSlider from './Components/PlayBar';
 import ControlBar from './Components/ControlBar';
 import UploadButton from './Components/UploadButton';
+
 import './App.css';
+import './Styles/Deck.css'
 import axios from "axios";
 import {Grid} from '@mui/material'
+import Box from '@mui/material/Box';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import {apiBaseUrl} from './constants'
 import { useStateValue, setPlay, setSongList, setExistingUser, setFlushFlag } from './state';
 import {SongEntry} from './types'
 
+
+const theme = createTheme({
+  typography: {
+    allVariants: {
+      fontFamily: 'courier',
+      textTransform: 'none',
+      fontSize: 14,
+    },
+  },
+});
 
 
 //To-do: 1) Fix smooth restart when song selection changes. 2) Add loop-adjustment capabilities
 function App() {
   // const [play, setPlay2] = useState(false)
   const [{Tape1}, dispatch] = useStateValue();
-  // const audioCtx = Tape1.audioCtx;
-
-  // useEffect(()=>{
-  //   const source = audioCtx.createBufferSource();
-  //   const request = new XMLHttpRequest();
-  //   request.open("GET", audioBaseUrl, true);
-  //   request.responseType = "arraybuffer"; 
-
-  //   request.onload = () => {
-  //     const audioData = request.response;
-
-  //     audioCtx.decodeAudioData(audioData, (buffer: AudioBuffer) => {
-  //         source.buffer = buffer;
-  //         source.connect(audioCtx.destination);
-  //         source.loop = true;
-  //         source.playbackRate.value = Tape1.speed;
-  //       },);
-  //   }
-  //   request.send()
-  //   // handleNewSource(source)
-  //   source.start()
-  //   dispatch(setSrc(source))
-  //   // console.log('dispatched:', Src1)
-  // }, [])
 
   axios.defaults.withCredentials = true;
 
@@ -70,34 +60,51 @@ function App() {
     void fetchSongList();
   }, [dispatch])
 
-  // useEffect(() => {
-  //   console.log(Tape1.audioSrc.)
-  // })
-
   return (
-    <Grid
-      container
-      spacing={0}
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      style={{ minHeight: '100vh' }}
-    >
-      <div className="App">
-        <Grid sx={{ flexGrow: 1 }} container spacing={2}>
-          <RangeSlider/>
-          <Grid item xs={12}>
-            <Grid container justifyContent="center" spacing={2}>
-            <Grid item xs={11}><CassetteLoops looplen={Tape1.looplen}/></Grid>
-            <Grid item xs={1}><SpeedAdjust/></Grid>
+    <ThemeProvider theme = {theme}> 
+
+
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{ minHeight: '100vh' }}
+      >
+        <div className="App">
+          <Grid sx={{ flexGrow: 1 }} container direction="column" justifyContent="center" spacing={2}>
+            <Box className="Case" padding={3}>
+            <Grid container justifyContent="center" direction="row">
+              {/* <Grid container direction="column">   */}
+                    <Grid item xs={10}>
+                        <RangeSlider/>
+                    </Grid>
+                    <Grid item xs={2}>
+                    </Grid>
             </Grid>
+            <Grid container direction="row">
+              <Grid item xs={10}><CassetteLoops looplen={Tape1.looplen}/></Grid>
+              <Grid item xs={2} padding={1.5}><SpeedAdjust/></Grid>
+            </Grid>
+            <Grid container direction="row" padding={0.8}>
+              <Grid item xs={10}>
+                <ControlBar/>
+              </Grid>
+              <Grid item xs={2}>
+                </Grid>
+            </Grid>
+            <Grid container direction="row" padding={1.5}>
+                <SongMenu/>
+            </Grid>
+            </Box>
+            
+            <UploadButton/>
           </Grid>
-        </Grid>
-        <ControlBar/>
-        <SongMenu/>
-        <UploadButton/>
-      </div>
-    </Grid>
+
+        </div>
+      </Grid>
+    </ThemeProvider>
   );
 }
 
