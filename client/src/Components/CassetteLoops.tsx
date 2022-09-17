@@ -1,7 +1,8 @@
 import './CassetteLoops.css'
+import { Tape } from '../types';
 
 // eslint-disable-next-line react/prop-types
-const CassetteDrawing4 = () => {
+const CassetteDrawing4 = (tape: Tape) => {
 
     return (
         <svg className="Cassette" viewBox="0 0 1632 1008" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,7 +45,7 @@ const CassetteDrawing4 = () => {
             <circle id="Ellipse 19" cx="435.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
             </g>
             <circle id="Nudge 2" cx="505.5" cy="444.5" r="88.5" fill="none" stroke="black" strokeWidth="4"/>
-            <g id="Nudge 1" className="NudgeFwd">
+            <g id="Nudge 1" className={`NudgeFwd-${tape.name}`}>
             <circle id="Ellipse 3" cx="1101.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
             <g id="Ridges">
             <path id="Ellipse 4" d="M1179.71 467.434C1181.89 459.985 1183 452.263 1183 444.5" stroke="black" strokeWidth="10"/>
@@ -75,7 +76,7 @@ const CassetteDrawing4 = () => {
 )};
 
 
-const CassetteDrawing1 = () => {
+const CassetteDrawing1 = (tape: Tape) => {
 
     return (
         <svg className="Cassette" viewBox="0 0 1632 1008" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -118,7 +119,7 @@ const CassetteDrawing1 = () => {
             <circle id="Ellipse 20" cx="1187.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
             <circle id="Ellipse 19" cx="435.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
             </g>
-            <g id="Nudge 3" className="NudgeBack">
+            <g id="Nudge 3" className={`NudgeBack-${tape.name}`}>
                 <circle id="Ellipse 3" cx="505.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
                 <g id="Ridges">
                 <path id="Ellipse 4" d="M583.707 467.434C585.891 459.985 587 452.263 587 444.5" stroke="black" strokeWidth="10"/>
@@ -135,7 +136,7 @@ const CassetteDrawing1 = () => {
                 <path id="Ellipse 14" d="M517.074 363.826C509.39 362.724 501.588 362.725 493.904 363.829" stroke="black" strokeWidth="10"/>
             </g>
             </g>
-            <g id="Nudge 1" className="NudgeFwd">
+            <g id="Nudge 1" className={`NudgeFwd-${tape.name}`}>
                 <circle id="Ellipse 3_2" cx="1101.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
                 <g id="Ridges_2">
                 <path id="Ellipse 4_2" d="M1179.71 467.434C1181.89 459.985 1183 452.263 1183 444.5" stroke="black" strokeWidth="10"/>
@@ -174,7 +175,7 @@ const CassetteDrawing1 = () => {
 
 )};
 
-const CassetteDrawing2 = () => {
+const CassetteDrawing2 = (tape: Tape) => {
 
     return (
         <svg className="Cassette" viewBox="0 0 1632 1008" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -216,7 +217,7 @@ const CassetteDrawing2 = () => {
             <circle id="Ellipse 20" cx="1187.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
             <circle id="Ellipse 19" cx="435.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
             </g>
-            <g id="Nudge 3" className="NudgeBack">
+            <g id="Nudge 3" className={`NudgeBack-${tape.name}`}>
             <circle id="Ellipse 3" cx="505.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
             <g id="Ridges">
             <path id="Ellipse 4" d="M583.707 467.434C585.891 459.985 587 452.263 587 444.5" stroke="black" strokeWidth="10"/>
@@ -233,7 +234,7 @@ const CassetteDrawing2 = () => {
             <path id="Ellipse 14" d="M517.074 363.826C509.39 362.724 501.588 362.725 493.904 363.829" stroke="black" strokeWidth="10"/>
             </g>
             </g>
-            <g id="Nudge 1" className="NudgeFwd">
+            <g id="Nudge 1" className={`NudgeFwd-${tape.name}`}>
             <circle id="Ellipse 3_2" cx="1101.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
             <g id="Ridges_2">
             <path id="Ellipse 4_2" d="M1179.71 467.434C1181.89 459.985 1183 452.263 1183 444.5" stroke="black" strokeWidth="10"/>
@@ -265,7 +266,7 @@ const CassetteDrawing2 = () => {
 
 )};
 
-const CassetteDrawing3 = () => {
+const CassetteDrawing3 = (tape: Tape) => {
 
     return (
         <svg className="Cassette" viewBox="0 0 1632 1008" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -307,7 +308,7 @@ const CassetteDrawing3 = () => {
             <circle id="Ellipse 20" cx="1187.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
             <circle id="Ellipse 19" cx="435.5" cy="948.5" r="38.5" fill="none" stroke="black" strokeWidth="4"/>
             </g>
-            <g id="Nudge 3" className="NudgeFwd">
+            <g id="Nudge 3" className={`NudgeFwd-${tape.name}`}>
             <circle id="Ellipse 3" cx="505.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
             <g id="Ridges">
             <path id="Ellipse 4" d="M583.707 467.434C585.891 459.985 587 452.263 587 444.5" stroke="black" strokeWidth="10"/>
@@ -324,7 +325,7 @@ const CassetteDrawing3 = () => {
             <path id="Ellipse 14" d="M517.074 363.826C509.39 362.724 501.588 362.725 493.904 363.829" stroke="black" strokeWidth="10"/>
             </g>
             </g>
-            <g id="Nudge 1" className="NudgeFwd">
+            <g id="Nudge 1" className={`NudgeFwd-${tape.name}`}>
             <circle id="Ellipse 3_2" cx="1101.5" cy="444.5" r="107.5" fill="none" stroke="black" strokeWidth="42"/>
             <g id="Ridges_2">
             <path id="Ellipse 4_2" d="M1179.71 467.434C1181.89 459.985 1183 452.263 1183 444.5" stroke="black" strokeWidth="10"/>
@@ -354,19 +355,20 @@ const CassetteDrawing3 = () => {
         </svg>
 )};
 
-const CassetteDrawing = (props: {looplen: number}) => {
-    const looplen = props.looplen;
+const CassetteDrawing = (props: {tape: Tape}) => {
+    const tape = props.tape;
+    const looplen = tape.looplen;
     if (looplen>50) {
-        return CassetteDrawing1()
+        return CassetteDrawing1(tape)
     }
     else if (looplen>25 && looplen<=50) {
-        return CassetteDrawing2()
+        return CassetteDrawing2(tape)
     }
     else if (looplen>12.5 && looplen<=25) {
-        return CassetteDrawing3()
+        return CassetteDrawing3(tape)
     }
     else {
-        return CassetteDrawing4()
+        return CassetteDrawing4(tape)
     }
 }
 

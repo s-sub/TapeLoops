@@ -5,14 +5,26 @@
 }
 
 /* @media (prefers-reduced-motion: no-preference) { */
-.NudgeFwd {
-    animation: spin infinite var(--animation-duration) linear;
-    animation-play-state: var(--play);
+.NudgeFwd-Tape1 {
+    animation: spin infinite var(--animation-duration-Tape1) linear;
+    animation-play-state: var(--play-Tape1);
 }
 
-.NudgeBack {
-    animation: spin infinite var(--animation-duration) linear;
-    animation-play-state: var(--play);
+.NudgeBack-Tape1 {
+    animation: spin infinite var(--animation-duration-Tape1) linear;
+    animation-play-state: var(--play-Tape1);
+    animation-direction: reverse;
+}
+
+/* @media (prefers-reduced-motion: no-preference) { */
+.NudgeFwd-Tape2 {
+    animation: spin infinite var(--animation-duration-Tape2) linear;
+    animation-play-state: var(--play-Tape2);
+}
+
+.NudgeBack-Tape2 {
+    animation: spin infinite var(--animation-duration-Tape2) linear;
+    animation-play-state: var(--play-Tape2);
     animation-direction: reverse;
 }
 

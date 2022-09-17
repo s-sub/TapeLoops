@@ -1,12 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
+import { Tape } from '../types';
 import { useStateValue, setSpeed_anim, setPlay, setSpeedChangeTime, setSrc, setCtx, restartContext} from '../state';
 import { styled, alpha, createTheme} from '@mui/system';
 
 
-// const green500 = "#228b22";
-// const green900 = "#7FFF00";
 const customTheme = createTheme({
   typography: {
     fontFamily: 'Courier'}
@@ -15,24 +14,24 @@ const customTheme = createTheme({
 const CustomSlider = styled(Slider)(({ theme }) => ({
   color: "#DDD6CE",
   "& .MuiSlider-thumb": {
-    backgroundColor: "#FF926B", //color of thumbs
+    backgroundColor: "#FF926B",
     radius: 30
   },
   "& .MuiSlider-rail": {
-    color: '#cfc5c2' ////color of the slider outside  teh area between thumbs
+    color: '#cfc5c2'
   },
   "& .MuiSlider-track": {
-    color: '#cfc5c2' ////color of the slider outside  teh area between thumbs
+    color: '#cfc5c2'
   },
   "& .MuiSlider-markLabel": {
-    color: "black" ////color of the slider outside  teh area between thumbs
+    color: "black"
   }
   
 }));
 
-export default function VerticalSlider() {
-    
-    const [{Tape1}, dispatch] = useStateValue();
+export default function VerticalSlider(props: {tape: Tape}) {
+    const tape = props.tape;
+    const [, dispatch] = useStateValue();
 
     const [value, setValue] = React.useState<number>(100);
 
@@ -74,10 +73,10 @@ export default function VerticalSlider() {
     const handleChangeCommit = async () => {
       
         const audioParams = {speed: value/100}
-        dispatch(setSpeed_anim((value/100)));
-        const {newaudioCtx: newaudioCtx, newaudioSrc: newaudioSrc} = restartContext(Tape1, audioParams);
-        dispatch(setCtx(newaudioCtx))
-        dispatch(setSrc(newaudioSrc))
+        dispatch(setSpeed_anim((value/100), tape.name));
+        const {newaudioCtx: newaudioCtx, newaudioSrc: newaudioSrc} = restartContext(tape, audioParams);
+        dispatch(setCtx(newaudioCtx, tape.name))
+        dispatch(setSrc(newaudioSrc, tape.name))
 
     };
 

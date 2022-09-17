@@ -1,9 +1,10 @@
-import { State } from "./state";
-import { SongEntry } from "../types";
+import { State} from "./state";
+import { SongEntry , Tape} from "../types";
 
 export type Action =
   | {
       type: "SET_SPEED_ANIM";
+      tapename: string;
       payload: number;
     }
   | {
@@ -12,14 +13,17 @@ export type Action =
     }
   | {
       type: "PLAY_TOGGLE";
+      tapename: string;
       payload: boolean;
     }
   | {
       type: "SET_SOURCE";
+      tapename: string;
       payload: AudioBufferSourceNode;
     }
   | {
       type: "SET_CONTEXT";
+      tapename: string;
       payload: AudioContext;
     }
   | {
@@ -28,10 +32,12 @@ export type Action =
   }
   | {
     type: "SET_LOOPSTART";
+    tapename: string;
     payload: number;
   }
   | {
     type: "SET_LOOPLEN";
+    tapename: string;
     payload: number;
   }
   | {
@@ -50,7 +56,7 @@ export const reducer = (state: State, action: Action): State => {
                 ...state,
                 existingUser: action.payload
             };
-        case "SET_FLUSH_FLAG":
+        case "SET_FLUSH_FLAG": 
             return {
                 ...state,
                 flushFlag: action.payload
@@ -58,8 +64,8 @@ export const reducer = (state: State, action: Action): State => {
         case "SET_SPEED_ANIM":
             return {
                 ...state,
-                Tape1: {
-                    ...state.Tape1,
+                [action.tapename]: {
+                    ...(state[action.tapename as keyof State] as Tape),
                     speed: action.payload
                     // audioSrc: {
                     //     ...state.Tape1.audioSrc,
@@ -82,24 +88,24 @@ export const reducer = (state: State, action: Action): State => {
         case "PLAY_TOGGLE":
             return {
                 ...state,
-                Tape1: {
-                    ...state.Tape1,
+                [action.tapename]: {
+                    ...(state[action.tapename as keyof State] as Tape),
                     play: action.payload
                 },
             };
         case "SET_SOURCE":
             return {
                 ...state,
-                Tape1: {
-                    ...state.Tape1,
+                [action.tapename]: {
+                    ...(state[action.tapename as keyof State] as Tape),
                     audioSrc: action.payload
                 },
             };
         case "SET_CONTEXT":
             return {
                 ...state,
-                Tape1: {
-                    ...state.Tape1,
+                [action.tapename]: {
+                    ...(state[action.tapename as keyof State] as Tape),
                     audioCtx: action.payload
                 }
             };
@@ -111,16 +117,16 @@ export const reducer = (state: State, action: Action): State => {
         case "SET_LOOPSTART":
             return {
                 ...state,
-                Tape1: {
-                    ...state.Tape1,
+                [action.tapename]: {
+                    ...(state[action.tapename as keyof State] as Tape),
                     loopstart: action.payload
                 }
             };
         case "SET_LOOPLEN":
             return {
                 ...state,
-                Tape1: {
-                    ...state.Tape1,
+                [action.tapename]: {
+                    ...(state[action.tapename as keyof State] as Tape),
                     looplen: action.payload
                 }
             };
@@ -130,41 +136,44 @@ export const reducer = (state: State, action: Action): State => {
 };
 
 //NONE OF THE STATE UPDATES ARE WORKING VIA THE REDUCER - DEBUG
-export const setSpeed_anim = (speed: number): Action => {
+export const setSpeed_anim = (speed: number, tapename: string): Action => {
     const newduration = 3/(speed**4);
-    document.documentElement.style.setProperty('--animation-duration', `${newduration}s`);
+    const CSSname = `--animation-duration-${tapename}`;
+    document.documentElement.style.setProperty(CSSname, `${newduration}s`);
     console.log('speed',speed)
-    return { type: "SET_SPEED_ANIM", payload: speed };
+    return { type: "SET_SPEED_ANIM", tapename: tapename, payload: speed };
 };
 
 export const setSpeedChangeTime = (time: number): Action => {
     return {type: "SET_SPEED_CHANGE_TIME", payload: time};
 };
 
-export const setPlay = (play: boolean): Action => {
-    document.documentElement.style.setProperty('--play', play ? "running" : "paused");
+export const setPlay = (play: boolean, tapename: string): Action => {
+    /// To-Do: change CSS things...
+    const CSSname = `--play-${tapename}`
+    document.documentElement.style.setProperty(CSSname, play ? "running" : "paused");
     console.log('setting play to:', play)
-    return {type: "PLAY_TOGGLE", payload: play};
+    return {type: "PLAY_TOGGLE", tapename: tapename, payload: play};
 };
 
-export const setSrc = (source: AudioBufferSourceNode): Action => {    
-    return {type: "SET_SOURCE", payload: source};
+export const setSrc = (source: AudioBufferSourceNode, tapename: string): Action => {    
+    return {type: "SET_SOURCE", tapename: tapename, payload: source};
 };
 
 export const setSongList = (songs: Array<SongEntry>): Action => {
     return {type: "SET_SONGLIST", payload: songs};
 };
 
-export const setCtx = (context: AudioContext): Action => {    
-    return {type: "SET_CONTEXT", payload: context};
+export const setCtx = (context: AudioContext, tapename: string): Action => {    
+    return {type: "SET_CONTEXT", tapename: tapename, payload: context};
 };
 
-export const setLoopstart = (loopstart: number): Action => {    
-    return {type: "SET_LOOPSTART", payload: loopstart};
+export const setLoopstart = (loopstart: number, tapename: string): Action => {    
+    return {type: "SET_LOOPSTART", tapename: tapename, payload: loopstart};
 };
 
-export const setLooplen = (looplen: number): Action => {    
-    return {type: "SET_LOOPLEN", payload: looplen};
+export const setLooplen = (looplen: number, tapename: string): Action => {    
+    return {type: "SET_LOOPLEN", tapename: tapename, payload: looplen};
 };
 
 export const setExistingUser = (existingUser: boolean): Action => {    

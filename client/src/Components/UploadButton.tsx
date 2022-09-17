@@ -62,17 +62,9 @@ export default function UploadButton() {
                 setLoading(true);
                 // eslint-disable-next-line prefer-const
                 let formData = new FormData();
-                // const file = new File([blob],newName)
                 if (selectedFile) {formData.append('file',selectedFile,newName)}
-                // if (selectedFile) {formData.append('file',selectedFile.slice(0,1102974+32, 'audio/mpeg'),newName)}
                 formData.append('name',newName)
                 console.log('formdata',formData, typeof(formData))
-
-                // const contentLength = selectedFile.byteLength;
-                // console.log('POST',selectedFile, contentLength)
-                // const config = {
-                //     onUploadProgress: (progressEvent: ProgressEvent) => console.log(Math.round( (progressEvent.loaded * 100) / progressEvent.total ))
-                // }
 
                 //CURRENT
                 if (!existingUser) {
@@ -147,7 +139,7 @@ export default function UploadButton() {
 
     return (
         <div>
-        <Button variant="contained" disabled={uploadsAtCapacity} onClick={handleOpen}>
+        <Button variant="contained" sx={{backgroundColor: "#FF926B", color: "#000000"}} disabled={uploadsAtCapacity} onClick={handleOpen}>
             {uploadsAtCapacity ? <span><i>Uploads at Capacity</i></span> : <span>Upload your own!</span>}
         </Button>
         <Modal

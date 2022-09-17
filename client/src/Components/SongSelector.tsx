@@ -9,15 +9,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import { useStateValue, setSrc, setCtx, restartContext, setSongList } from '../state';
-import { SongEntry } from '../types';
+import { SongEntry, Tape } from '../types';
 
 import axios from "axios";
 import {apiBaseUrl} from '../constants'
 import Grid from '@mui/material/Grid';
 
-export default function SongMenu() {
+export default function SongMenu(props: {tape: Tape}) {
+    const tape = props.tape;
     const [songID, setSongID] = React.useState('');
-    const [{Tape1, audiolist}, dispatch] = useStateValue();
+    const [{audiolist}, dispatch] = useStateValue();
 
     const handleChange = async (event: SelectChangeEvent) => {
         setSongID(event.target.value as string);
@@ -31,11 +32,11 @@ export default function SongMenu() {
                 {responseType: 'arraybuffer'}
               );
 
-            const audioBuffer = await Tape1.audioCtx.decodeAudioData(songBuffer);
+            const audioBuffer = await tape.audioCtx.decodeAudioData(songBuffer);
             const audioParams = {audioBuffer: audioBuffer}
-            const {newaudioCtx: newaudioCtx, newaudioSrc: newaudioSrc} = restartContext(Tape1, audioParams);
-            dispatch(setCtx(newaudioCtx))
-            dispatch(setSrc(newaudioSrc))
+            const {newaudioCtx: newaudioCtx, newaudioSrc: newaudioSrc} = restartContext(tape, audioParams);
+            dispatch(setCtx(newaudioCtx, tape.name))
+            dispatch(setSrc(newaudioSrc, tape.name))
         } catch (e: unknown) {
             if (axios.isAxiosError(e)) {
               console.error(e?.response?.data || "Unrecognized axios error");

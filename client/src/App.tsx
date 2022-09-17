@@ -5,6 +5,7 @@ import SongMenu from './Components/SongSelector';
 import RangeSlider from './Components/PlayBar';
 import ControlBar from './Components/ControlBar';
 import UploadButton from './Components/UploadButton';
+import SingleDeck from './Components/SingleDeck';
 
 import './App.css';
 import './Styles/Deck.css'
@@ -28,10 +29,9 @@ const theme = createTheme({
 });
 
 
-//To-do: 1) Fix smooth restart when song selection changes. 2) Add loop-adjustment capabilities
+
 function App() {
-  // const [play, setPlay2] = useState(false)
-  const [{Tape1}, dispatch] = useStateValue();
+  const [{Tape1, Tape2}, dispatch] = useStateValue();
 
   axios.defaults.withCredentials = true;
 
@@ -43,8 +43,6 @@ function App() {
         const { data: {files: songListFromApi, existingUser: existingUser, flushFlag: flushFlag } } = await axios.get<{files: SongEntry[], existingUser: boolean, flushFlag: boolean}>(
           `${apiBaseUrl}/songs`
         );
-        // console.log('songlistfromapi',songListFromApi);
-        // console.log(existingUser, flushFlag)
         
         if (existingUser) {
             axios.put<void>(`${apiBaseUrl}/users/touch`)
@@ -62,8 +60,6 @@ function App() {
 
   return (
     <ThemeProvider theme = {theme}> 
-
-
       <Grid
         container
         spacing={0}
@@ -73,35 +69,17 @@ function App() {
         style={{ minHeight: '100vh' }}
       >
         <div className="App">
-          <Grid sx={{ flexGrow: 1 }} container direction="column" justifyContent="center" spacing={2}>
-            <Box className="Case" padding={3}>
-            <Grid container justifyContent="center" direction="row">
-              {/* <Grid container direction="column">   */}
-                    <Grid item xs={10}>
-                        <RangeSlider/>
-                    </Grid>
-                    <Grid item xs={2}>
-                    </Grid>
-            </Grid>
-            <Grid container direction="row">
-              <Grid item xs={10}><CassetteLoops looplen={Tape1.looplen}/></Grid>
-              <Grid item xs={2} padding={1.5}><SpeedAdjust/></Grid>
-            </Grid>
-            <Grid container direction="row" padding={0.8}>
-              <Grid item xs={10}>
-                <ControlBar/>
-              </Grid>
-              <Grid item xs={2}>
-                </Grid>
-            </Grid>
-            <Grid container direction="row" padding={1.5}>
-                <SongMenu/>
-            </Grid>
-            </Box>
-            
-            <UploadButton/>
-          </Grid>
-
+          <Grid sx={{ flexGrow: 1 }} container direction="row" justifyContent="center" spacing={2}>
+            <Grid item xs={6}>
+              <SingleDeck tape={Tape1}/>    
+            </Grid>    
+            <Grid item xs={6}>
+              <SingleDeck tape={Tape2}/>    
+            </Grid> 
+          </Grid>  
+          <Box sx={{padding: 2}}>
+          <UploadButton/>
+          </Box>
         </div>
       </Grid>
     </ThemeProvider>
