@@ -34,7 +34,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true, parameterLimit: 1000
 
 app.get('/api/ping', (_req, res) => {
   console.log('someone pinged here');
-  res.send('pong');
+  res.status(200).send('pong');
 });
 
 app.use('/api/users',usersRouter);
