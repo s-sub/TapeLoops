@@ -2,16 +2,12 @@ import * as React from 'react';
 import Slider from '@mui/material/Slider';
 import { Tape } from '../types';
 import { useStateValue, setSpeed_anim, setSrc, setCtx, restartContext} from '../state';
-import { styled, createTheme} from '@mui/system';
+import { styled} from '@mui/system';
 
-
-const customTheme = createTheme({
-  typography: {
-    fontFamily: 'Courier'}
-});
 
 const CustomSlider = styled(Slider)(() => ({
   color: "#DDD6CE",
+  fontFamily: "Courier",
   "& .MuiSlider-thumb": {
     backgroundColor: "#FF926B",
     radius: 30
@@ -25,7 +21,6 @@ const CustomSlider = styled(Slider)(() => ({
   "& .MuiSlider-markLabel": {
     color: "black"
   }
-  
 }));
 
 export default function VerticalSlider(props: {tape: Tape}) {
@@ -85,8 +80,7 @@ export default function VerticalSlider(props: {tape: Tape}) {
     }
 
     return (
-        // <Box sx={{ height: 0.8, justifyContent: "center"}}>
-        <CustomSlider theme={customTheme}
+        <CustomSlider
             sx={{
             '& input[type="range"]': {
                 WebkitAppearance: 'slider-vertical',
@@ -104,6 +98,5 @@ export default function VerticalSlider(props: {tape: Tape}) {
             onChange={handleChange}
             onChangeCommitted={handleChangeCommit}
         />
-        // </Box>
     );
 }

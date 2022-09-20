@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
+import CircularProgress from '@mui/material/CircularProgress';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import { useStateValue, setSrc, setCtx, restartContext, setSongList, setDeleteID, setPlay } from '../state';
@@ -17,8 +18,10 @@ import {apiBaseUrl} from '../constants'
 export default function SongMenu(props: {tape: Tape}) {
     const tape = props.tape;
     const [songID, setSongID] = useState('');
+    const [loading, setLoading] = useState(true);
     const [{audiolist, deleteID}, dispatch] = useStateValue();
 
+    // If a file that is currently playing on either deck is deleted, reset the audio context to a blank buffer
     useEffect(() => {
         if (songID===deleteID) {
             const audioParams = {audioBuffer: tape.audioCtx.createBuffer(1, 22050, 22050)}
@@ -30,6 +33,17 @@ export default function SongMenu(props: {tape: Tape}) {
         }
     },[deleteID])
 
+
+    
+    useEffect(() => {
+        if (audiolist.length===0) {
+            setLoading(true)
+        }
+        else {
+            setLoading(false)
+        }
+    },[audiolist])
+
     const handleDelete = async (id: string) => {
         try {
             await dispatch(setDeleteID(id))
@@ -38,7 +52,6 @@ export default function SongMenu(props: {tape: Tape}) {
             );
             // setSongID("")
             const newAudioList = audiolist.filter((song: SongEntry) => song.id !== id);
-            console.log('newaud', newAudioList)
             dispatch(setSongList(newAudioList))
 
         } catch (e: unknown) {
@@ -76,36 +89,34 @@ export default function SongMenu(props: {tape: Tape}) {
           }
     };
 
-    
-
-
-
-    return(
+        return(
         <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Audio</InputLabel>
+            <InputLabel id="demo-simple-select-label" sx={{align: "center"}}>
+                {loading ? <div>{"Loading - Server starting up . . .     "}
+                    <CircularProgress size={18} thickness={9} sx={{
+                        color: '#FF926B',
+                        }}
+                    />
+                </div> : "Audio"}
+            </InputLabel>
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={songID}
-                label="Audio"
+                label={"Audio"}
                 onChange={handleChange}
-                sx={{align: "center"}}
+                sx={loading ? {background: "#C2C2C2", align: "center"} : {align: "center"}}
+                disabled={loading}
             >
-            {audiolist.map((song: SongEntry) =>
+            {loading ? <DeleteIcon/> : audiolist.map((song: SongEntry) =>
                 {if (song.cookieID!==-1 && song.id) {
                     return(
                         <MenuItem key={song.id} value={song.id}>{song.song} 
                             <ListItemSecondaryAction>
-                                {/* <Button >Delete</Button> */}
                                 <IconButton onClick={()=>handleDelete(song.id)} sx={{}}>
                                     <DeleteIcon />
                                 </IconButton>
                             </ListItemSecondaryAction>    
-                            {/* <ListItemIcon sx={{height: 1/2}}>
-                                <IconButton onClick={()=>handleDelete(song.id)} edge="end">
-                                    <DeleteIcon />
-                                </IconButton>
-                            </ListItemIcon>   */}
                         </MenuItem>
                     )
                     } else {

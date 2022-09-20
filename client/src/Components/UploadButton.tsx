@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import CheckIcon from '@mui/icons-material/Check';
 import SaveIcon from '@mui/icons-material/Save';
+import { styled, createTheme} from '@mui/system';
 import { green } from '@mui/material/colors';
 import { useState, useEffect } from 'react';
 import { useStateValue, setSongList, setExistingUser, setFlushFlag } from '../state';
@@ -29,6 +30,21 @@ const style = {
     display: 'flex', 
     alignItems: 'center'
 };
+
+// const customTheme = createTheme({
+//     typography: {
+//       fontFamily: 'Courier'}
+// });
+  
+const CustomButton = styled(Button)(() => ({
+    backgroundColor: "#FF926B",
+    color: "#000000",
+    fontSize: 18,
+    fontFamily: 'Courier',
+    "&:disabled": {
+        backgroundColor: '#C2C2C2'
+    }
+}));
 
 export default function UploadButton() {
     const [selectedFile, setSelectedFile] = useState<Blob | null>(null);
@@ -144,11 +160,13 @@ export default function UploadButton() {
 
     return (
         <div>
-        <Button variant="contained" sx={{backgroundColor: "#FF926B", color: "#000000", fontSize: 18}} disabled={uploadsAtCapacity} onClick={handleOpen}>
+        <CustomButton variant="contained" 
+            // sx={{backgroundColor: "#FF926B", color: "#000000", fontSize: 18}} 
+            disabled={uploadsAtCapacity} onClick={handleOpen}>
             {uploadsAtCapacity ? <span><i>Uploads at Capacity</i></span> : <span>Upload your own!</span>}
-        </Button>
+        </CustomButton>
         <Modal
-            open={open}
+            open={open && !uploadsAtCapacity}
             onClose={handleClose}
         >
             <Box sx={style}>

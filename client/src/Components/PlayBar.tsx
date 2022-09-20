@@ -166,7 +166,7 @@ export default function RangeSlider(props: {tape: Tape}) {
     //Refactor so that time step is a constant sum and doesn't require the full calculation each time....
     let cliplength = 1;
     if (tape.audioSrc.buffer) {cliplength = tape.audioSrc.buffer.duration}
-    const refreshtime = 10;
+    const refreshtime = 5;
     const loopend = tape.looplen + tape.loopstart;
     const loopstart = tape.loopstart;
     const oldvals = values.slice();

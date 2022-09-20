@@ -1,6 +1,6 @@
 export const audioBaseUrl = 'https://assets.readingeggsassets.com/activities/break_it_up/audio/us/peck-fp-2476b044.mp3'
 // export const apiBaseUrl = 'http://localhost:3001/api'
-export const maxFilesPerUser = 5
+export const maxFilesPerUser = 9
 export const maxFileSize = 4000000
 
 const prodApiUrl = 'https://tapeloop-server.onrender.com/api'
