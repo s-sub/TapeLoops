@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from "cors";
+import dotenv from 'dotenv';
 import songsRouter from './routes/songlist';
 import uploadRouter from './routes/upload';
 import deleteRouter from './routes/delete';
@@ -10,7 +11,8 @@ import cookieParser from "cookie-parser";
 import cookieget from "./routes/cookie";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-var-requires
-require('dotenv').config();
+
+dotenv.config();
 const app = express();
 
 app.use(cors({
