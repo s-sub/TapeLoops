@@ -8,9 +8,9 @@
     "tsc": "tsc",
     "dev": "ts-node-dev src/index.ts",
     "lint": "eslint --ext .ts .",
-    "start": "node build/index.ts",
-    "build": "cd packages/react-scripts && node bin/react-scripts.js build"
+    "start": "node src/index.ts"
   },
+  "type": "module",
   "author": "",
   "license": "ISC",
   "devDependencies": {
