@@ -35,8 +35,6 @@ export default function ControlBar(props: {tape: Tape}) {
             const currTime = (((tape.audioCtx.currentTime*tape.speed / cliplength) * 100 ) % (tape.looplen)) + tape.loopstart;
             const transformTime = currTime/100 * cliplength;
 
-            console.log(tape.looplen, tape.loopstart)
-
             await dispatch(setLooplen(100*newLoop, tape.name))
 
             const newLoopStart = Math.min(transformTime,cliplength*(1 - (newLoop)))

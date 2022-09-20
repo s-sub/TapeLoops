@@ -1,4 +1,4 @@
-import './CassetteLoops.css'
+import '../Styles/CassetteLoops.css'
 import { Tape } from '../types';
 
 // eslint-disable-next-line react/prop-types

@@ -7,9 +7,10 @@ import Fab from '@mui/material/Fab';
 import CheckIcon from '@mui/icons-material/Check';
 import SaveIcon from '@mui/icons-material/Save';
 import { green } from '@mui/material/colors';
-import { SetStateAction, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useStateValue, setSongList, setExistingUser, setFlushFlag } from '../state';
 import { SongEntry } from '../types';
+import {maxFilesPerUser, maxFileSize} from '../constants';
 
 import axios from "axios";
 import {apiBaseUrl} from '../constants'
@@ -36,9 +37,11 @@ export default function UploadButton() {
     const [{audiolist, existingUser, flushFlag}, dispatch] = useStateValue();
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
-    const currUploadState = (audiolist.length)>3;
+    const currUploadState = (audiolist.length)>maxFilesPerUser;
     const [uploadsAtCapacity, setUploadsAtCapacity] = useState(currUploadState);
     const [open, setOpen] = useState(false);
+    const [invalidFiletype, setInvalidFiletype] = useState(false);
+    const [invalidFilesize, setInvalidFilesize] = useState(false);
 
     const buttonSx = {
         ...(success && {
@@ -66,7 +69,6 @@ export default function UploadButton() {
                 formData.append('name',newName)
                 console.log('formdata',formData, typeof(formData))
 
-                //CURRENT
                 if (!existingUser) {
                     const { data: newID } = await axios.post(
                         `${apiBaseUrl}/users/`,
@@ -115,16 +117,20 @@ export default function UploadButton() {
             const newfile = event.target.files[0];
             try {
                 if (newfile.type && newfile.type.slice(0,5)!=='audio') {
-                    throw new Error('Wrong Type')
+                    setInvalidFiletype(true);
                 }
-                if (newfile.size > 10000000) {
-                    throw new Error('File too large')
+                else if (newfile.size > maxFileSize) {
+                    setInvalidFiletype(false);
+                    setInvalidFilesize(true);
                 }
-                const blob = new Blob([newfile],{type: 'audio/mpeg'})
-                setIsFilePicked(true);
-                setSelectedFile(blob)
-                console.log(newfile,'file');
-                setnewName(newfile.name);
+                else {
+                    setInvalidFilesize(false);
+                    setInvalidFiletype(false);
+                    const blob = new Blob([newfile],{type: 'audio/mpeg'})
+                    setIsFilePicked(true);
+                    setSelectedFile(blob)
+                    setnewName(newfile.name);
+                }
             } catch (e: unknown) {
                 console.error(e);
             }
@@ -132,14 +138,13 @@ export default function UploadButton() {
 	};
 
     useEffect(() => {
-        //TO-DO: Configure this elsewhere 
-        const newSongListLen = (audiolist.length)>5;
+        const newSongListLen = (audiolist.length)>maxFilesPerUser;
         setUploadsAtCapacity(newSongListLen)
     },[audiolist])
 
     return (
         <div>
-        <Button variant="contained" sx={{backgroundColor: "#FF926B", color: "#000000"}} disabled={uploadsAtCapacity} onClick={handleOpen}>
+        <Button variant="contained" sx={{backgroundColor: "#FF926B", color: "#000000", fontSize: 18}} disabled={uploadsAtCapacity} onClick={handleOpen}>
             {uploadsAtCapacity ? <span><i>Uploads at Capacity</i></span> : <span>Upload your own!</span>}
         </Button>
         <Modal
@@ -153,6 +158,7 @@ export default function UploadButton() {
                         onClick={handleUpload}
                         color="primary"
                         sx={buttonSx}
+                        disabled={!isFilePicked || invalidFiletype || invalidFilesize}
                         >
                         {success ? <CheckIcon /> : <SaveIcon />}
                     </Fab>
@@ -165,6 +171,8 @@ export default function UploadButton() {
                         }}
                     />}
                 </Box>
+                {invalidFiletype && <Box sx={{fontSize: 12, fontFamily: "Courier", fontStyle: "italic", color: "red"}}>File must be an audio file</Box>}
+                {invalidFilesize && <Box sx={{fontSize: 12, fontFamily: "Courier", fontStyle: "italic", color: "red"}}>File must be smaller than 4MB</Box>}
             </Box>
         </Modal>
         </div>

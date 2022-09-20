@@ -1,6 +1,5 @@
 import * as React from 'react';
 // import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -8,17 +7,48 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
-import { useStateValue, setSrc, setCtx, restartContext, setSongList } from '../state';
+import { useStateValue, setSrc, setCtx, restartContext, setSongList, setDeleteID, setPlay } from '../state';
+import {useState,useEffect} from 'react';
 import { SongEntry, Tape } from '../types';
 
 import axios from "axios";
 import {apiBaseUrl} from '../constants'
-import Grid from '@mui/material/Grid';
 
 export default function SongMenu(props: {tape: Tape}) {
     const tape = props.tape;
-    const [songID, setSongID] = React.useState('');
-    const [{audiolist}, dispatch] = useStateValue();
+    const [songID, setSongID] = useState('');
+    const [{audiolist, deleteID}, dispatch] = useStateValue();
+
+    useEffect(() => {
+        if (songID===deleteID) {
+            const audioParams = {audioBuffer: tape.audioCtx.createBuffer(1, 22050, 22050)}
+            const {newaudioCtx: newaudioCtx, newaudioSrc: newaudioSrc} = restartContext(tape, audioParams);
+            dispatch(setPlay(false, tape.name))
+            dispatch(setCtx(newaudioCtx, tape.name))
+            dispatch(setSrc(newaudioSrc, tape.name))
+            setSongID("");
+        }
+    },[deleteID])
+
+    const handleDelete = async (id: string) => {
+        try {
+            await dispatch(setDeleteID(id))
+            await axios.delete<string>(
+                `${apiBaseUrl}/delete/${id}`
+            );
+            // setSongID("")
+            const newAudioList = audiolist.filter((song: SongEntry) => song.id !== id);
+            console.log('newaud', newAudioList)
+            dispatch(setSongList(newAudioList))
+
+        } catch (e: unknown) {
+            if (axios.isAxiosError(e)) {
+              console.error(e?.response?.data || "Unrecognized axios error");
+            } else {
+              console.error("Unknown error", e);
+            }
+        }
+    };
 
     const handleChange = async (event: SelectChangeEvent) => {
         setSongID(event.target.value as string);
@@ -46,24 +76,7 @@ export default function SongMenu(props: {tape: Tape}) {
           }
     };
 
-    const handleDelete = async (id: string) => {
-        try {
-            await axios.delete<string>(
-                `${apiBaseUrl}/delete/${id}`
-            );
-            setSongID("")
-            const newAudioList = audiolist.filter((song: SongEntry) => song.id !== id);
-            console.log('newaud', newAudioList)
-            dispatch(setSongList(newAudioList))
-
-        } catch (e: unknown) {
-            if (axios.isAxiosError(e)) {
-              console.error(e?.response?.data || "Unrecognized axios error");
-            } else {
-              console.error("Unknown error", e);
-            }
-        }
-    };
+    
 
 
 
@@ -76,6 +89,7 @@ export default function SongMenu(props: {tape: Tape}) {
                 value={songID}
                 label="Audio"
                 onChange={handleChange}
+                sx={{align: "center"}}
             >
             {audiolist.map((song: SongEntry) =>
                 {if (song.cookieID!==-1 && song.id) {
@@ -83,10 +97,15 @@ export default function SongMenu(props: {tape: Tape}) {
                         <MenuItem key={song.id} value={song.id}>{song.song} 
                             <ListItemSecondaryAction>
                                 {/* <Button >Delete</Button> */}
+                                <IconButton onClick={()=>handleDelete(song.id)} sx={{}}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ListItemSecondaryAction>    
+                            {/* <ListItemIcon sx={{height: 1/2}}>
                                 <IconButton onClick={()=>handleDelete(song.id)} edge="end">
                                     <DeleteIcon />
                                 </IconButton>
-                            </ListItemSecondaryAction>      
+                            </ListItemIcon>   */}
                         </MenuItem>
                     )
                     } else {

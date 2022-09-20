@@ -1,11 +1,7 @@
-import {useState, useEffect} from 'react';
-import CassetteLoops from './Components/CassetteLoops'
-import SpeedAdjust from './Components/SpeedAdjust'
-import SongMenu from './Components/SongSelector';
-import RangeSlider from './Components/PlayBar';
-import ControlBar from './Components/ControlBar';
+import {useEffect} from 'react';
 import UploadButton from './Components/UploadButton';
 import SingleDeck from './Components/SingleDeck';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 import './App.css';
 import './Styles/Deck.css'
@@ -14,7 +10,7 @@ import {Grid} from '@mui/material'
 import Box from '@mui/material/Box';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import {apiBaseUrl} from './constants'
-import { useStateValue, setPlay, setSongList, setExistingUser, setFlushFlag } from './state';
+import { useStateValue, setSongList, setExistingUser, setFlushFlag } from './state';
 import {SongEntry} from './types'
 
 
@@ -28,6 +24,10 @@ const theme = createTheme({
   },
 });
 
+export const openInNewTab = (url: string): void => {
+  const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+  if (newWindow) newWindow.opener = null
+}
 
 
 function App() {
@@ -49,7 +49,6 @@ function App() {
         }
         dispatch(setExistingUser(existingUser))
         dispatch(setFlushFlag(flushFlag))
-        console.log('existinguser', existingUser, 'flushflag', flushFlag)
         dispatch(setSongList(songListFromApi));
       } catch (e) {
         console.error(e);
@@ -69,6 +68,7 @@ function App() {
         style={{ minHeight: '100vh' }}
       >
         <div className="App">
+          <div className="typewriter"><h2>Welcome to the virtual tape loop generator. Select an audio clip to get started!</h2></div>
           <Grid sx={{ flexGrow: 1 }} container direction="row" justifyContent="center" spacing={2}>
             <Grid item xs={6}>
               <SingleDeck tape={Tape1}/>    
@@ -78,7 +78,11 @@ function App() {
             </Grid> 
           </Grid>  
           <Box sx={{padding: 2}}>
-          <UploadButton/>
+            <UploadButton/>
+          </Box>
+          <Box sx={{padding: 2}}> 
+            <GitHubIcon sx={{color: "white", fontSize: 40}} onClick={() =>  openInNewTab('https://github.com/s-sub/TapeLoops')}></GitHubIcon>
+            <Box sx={{fontSize: 14, fontFamily: "Courier", fontStyle: "italic", color: "white"}}>Credit to /u/kaleidoscopy on reddit for illustrations</Box>
           </Box>
         </div>
       </Grid>

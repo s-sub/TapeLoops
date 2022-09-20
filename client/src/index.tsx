@@ -7,9 +7,9 @@ import {reducer, StateProvider} from "./state";
 // import { createRoot } from 'react-dom/client';
 // import * as ReactDOMClient from 'react-dom/client';
 
-// const root = ReactDOMClient.createRoot(
-//   document.getElementById('root') as HTMLElement
-// );
+// const container = document.getElementById('root');
+// // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+// const root = createRoot(container!)
 // root.render(
 //     <StateProvider reducer={reducer}>
 //       <App />

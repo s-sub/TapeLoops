@@ -47,6 +47,10 @@ export type Action =
   | {
     type: "SET_FLUSH_FLAG";
     payload: boolean;
+  }
+  | {
+    type: "SET_DELETE_ID";
+    payload: string;
   };
 
 export const reducer = (state: State, action: Action): State => {
@@ -130,17 +134,21 @@ export const reducer = (state: State, action: Action): State => {
                     looplen: action.payload
                 }
             };
+        case "SET_DELETE_ID":
+            return {
+                ...state,
+                deleteID: action.payload
+            };
         default:
             return state;
     }
 };
 
-//NONE OF THE STATE UPDATES ARE WORKING VIA THE REDUCER - DEBUG
+
 export const setSpeed_anim = (speed: number, tapename: string): Action => {
     const newduration = 3/(speed**4);
     const CSSname = `--animation-duration-${tapename}`;
     document.documentElement.style.setProperty(CSSname, `${newduration}s`);
-    console.log('speed',speed)
     return { type: "SET_SPEED_ANIM", tapename: tapename, payload: speed };
 };
 
@@ -149,10 +157,8 @@ export const setSpeedChangeTime = (time: number): Action => {
 };
 
 export const setPlay = (play: boolean, tapename: string): Action => {
-    /// To-Do: change CSS things...
     const CSSname = `--play-${tapename}`
     document.documentElement.style.setProperty(CSSname, play ? "running" : "paused");
-    console.log('setting play to:', play)
     return {type: "PLAY_TOGGLE", tapename: tapename, payload: play};
 };
 
@@ -184,14 +190,6 @@ export const setFlushFlag = (flushFlag: boolean): Action => {
     return {type: "SET_FLUSH_FLAG", payload: flushFlag};
 };
 
-// export const setSpeed_playback = (speed:number, audio: AudioBufferSourceNode, context: AudioContext): Action => {
-//     audio.disconnect();
-//     const newsource = context.createBufferSource()
-//     newsource.buffer = audio.buffer;
-//     newsource.connect(context.destination);
-//     newsource.loop = true;
-//     newsource.playbackRate.value = speed;
-//     newsource.start()
-//     return {type: "SET_SPEED_PLAYBACK", payload: newsource}
-// }
-
+export const setDeleteID = (id: string): Action => {    
+    return {type: "SET_DELETE_ID", payload: id};
+};

@@ -2,10 +2,12 @@ import { AudioParams, Tape } from "../types";
 
 export const restartContext = (tape: Tape, params: AudioParams): {newaudioCtx: AudioContext, newaudioSrc: AudioBufferSourceNode} => {
     const originalPlayState = tape.play;
-    if (originalPlayState) {
-        tape.audioCtx.suspend()
+    if (tape.audioCtx.state !== "closed") {
+        if (originalPlayState) {
+            tape.audioCtx.suspend()
+        }
+        tape.audioCtx.close()
     }
-    tape.audioCtx.close()
     const audioCtx = new AudioContext()
     
     const source = audioCtx.createBufferSource();

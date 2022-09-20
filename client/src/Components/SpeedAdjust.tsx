@@ -1,9 +1,8 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { Tape } from '../types';
-import { useStateValue, setSpeed_anim, setPlay, setSpeedChangeTime, setSrc, setCtx, restartContext} from '../state';
-import { styled, alpha, createTheme} from '@mui/system';
+import { useStateValue, setSpeed_anim, setSrc, setCtx, restartContext} from '../state';
+import { styled, createTheme} from '@mui/system';
 
 
 const customTheme = createTheme({
@@ -11,7 +10,7 @@ const customTheme = createTheme({
     fontFamily: 'Courier'}
 });
 
-const CustomSlider = styled(Slider)(({ theme }) => ({
+const CustomSlider = styled(Slider)(() => ({
   color: "#DDD6CE",
   "& .MuiSlider-thumb": {
     backgroundColor: "#FF926B",

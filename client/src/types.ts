@@ -15,11 +15,11 @@ export type Tape = {
     audio: string | null;
     audioCtx: AudioContext;
     audioSrc: AudioBufferSourceNode;
-    audioBuffer: AudioBuffer;
+    audioBuffer: AudioBuffer | null;
 }
 
 export type AudioParams = {
-    audioBuffer?: AudioBuffer;
+    audioBuffer?: AudioBuffer | null;
     loopStart?: number;
     loopEnd?: number;
     speed?: number;
