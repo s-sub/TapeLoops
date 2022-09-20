@@ -97,13 +97,13 @@ export default function SongMenu(props: {tape: Tape}) {
                         color: '#FF926B',
                         }}
                     />
-                </div> : "Audio"}
+                </div> : "Select Audio Clip"}
             </InputLabel>
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={songID}
-                label={"Audio"}
+                label={"Select Audio Clip"}
                 onChange={handleChange}
                 sx={loading ? {background: "#C2C2C2", align: "center"} : {align: "center"}}
                 disabled={loading}

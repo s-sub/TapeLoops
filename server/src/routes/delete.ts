@@ -48,15 +48,12 @@ router.delete('/:id', async (req, res) => {
         console.log('foundcookie', typeof(foundCookie));
         if (req.cookies.cookieName!==foundCookie) {throw new Error("Cookie mismatch error");}
 
-
-
+        console.log('key', foundkey);
         await client.send(new DeleteObjectCommand({
             Bucket: bucketname,
             Key: foundkey
           }));
         
-        
-
         await Audiofile.deleteOne({_id: req.params.id});
         
         console.log(`${foundsong.song} successfully deleted from S3 and DB`);
