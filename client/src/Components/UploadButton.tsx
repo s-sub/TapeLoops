@@ -31,10 +31,6 @@ const style = {
     alignItems: 'center'
 };
 
-// const customTheme = createTheme({
-//     typography: {
-//       fontFamily: 'Courier'}
-// });
   
 const CustomButton = styled(Button)(() => ({
     backgroundColor: "#FF926B",
@@ -71,6 +67,7 @@ export default function UploadButton() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setSuccess(false);
+        setIsFilePicked(false);
         setOpen(false);
     };
 
@@ -108,15 +105,11 @@ export default function UploadButton() {
 
                 const newAudioList = audiolist.concat([newAudio]);
                 dispatch(setSongList(newAudioList))
-                // if (document && document.getElementById('upload')) {(document.getElementById('upload') as HTMLInputElement).value = '';}
-                // setSelectedFile(null);
+
                 setLoading(false);
                 setSuccess(true);
+                setTimeout(handleClose, 1000)
 
-                // const { data: songListFromApi } = await axios.get<SongEntry[]>(
-                //     `${apiBaseUrl}/songs`
-                // );
-                // dispatch(setSongList(audiolist));
             }
         } catch (e: unknown) {
             if (axios.isAxiosError(e)) {
@@ -132,7 +125,8 @@ export default function UploadButton() {
         if (event.target && event.target.files) {
             const newfile = event.target.files[0];
             try {
-                if (newfile.type && newfile.type.slice(0,5)!=='audio') {
+                console.log(newfile.type, 'type')
+                if (newfile.type && (newfile.type === 'audio/midi' || newfile.type.slice(0,5)!=='audio')) {
                     setInvalidFiletype(true);
                 }
                 else if (newfile.size > maxFileSize) {
@@ -189,7 +183,7 @@ export default function UploadButton() {
                         }}
                     />}
                 </Box>
-                {invalidFiletype && <Box sx={{fontSize: 12, fontFamily: "Courier", fontStyle: "italic", color: "red"}}>File must be an audio file</Box>}
+                {invalidFiletype && <Box sx={{fontSize: 12, fontFamily: "Courier", fontStyle: "italic", color: "red"}}>File must be a valid audio file</Box>}
                 {invalidFilesize && <Box sx={{fontSize: 12, fontFamily: "Courier", fontStyle: "italic", color: "red"}}>File must be smaller than 4MB</Box>}
             </Box>
         </Modal>
