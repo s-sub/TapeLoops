@@ -2,7 +2,7 @@ export interface SongEntry {
     song: string;
     id: string;
     key: string;
-    cookieID?: number;
+    cookieID?: string;
 }
 
 export type Tape = {
@@ -19,7 +19,7 @@ export type Tape = {
 }
 
 export type AudioParams = {
-    audioBuffer?: AudioBuffer | null;
+    audioBuffer?: AudioBuffer;
     loopStart?: number;
     loopEnd?: number;
     speed?: number;

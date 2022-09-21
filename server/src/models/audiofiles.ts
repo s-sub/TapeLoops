@@ -26,7 +26,7 @@ if (conn) {
 
 const audiofileSchema = new mongoose.Schema<SongDoc>({
     cookieID: {
-        type: Number,
+        type: String,
         required: true
     },
     song: {

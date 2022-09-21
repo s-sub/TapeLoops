@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import express from 'express';
-// import songsService from '../services/songlistService';
 import { SongEntry } from '../types';
-// import type {Readable} from 'stream';
-// import Audiofile from '../models/audiofiles';
 import FileConnection from '../models/audiofiles';
 const Audiofile = FileConnection.model('Audiofile');
 
@@ -41,7 +38,7 @@ router.delete('/:id', async (req, res) => {
         
         if (foundsong) {
             foundkey = foundsong.key;
-            foundCookie = foundsong.cookieID.toString();
+            foundCookie = foundsong.cookieID;
           } else {throw new Error("Song does not exist");}
 
         console.log('reqcookie', typeof(req.cookies.cookieName));

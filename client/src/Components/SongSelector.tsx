@@ -109,7 +109,7 @@ export default function SongMenu(props: {tape: Tape}) {
                 disabled={loading}
             >
             {loading ? <DeleteIcon/> : audiolist.map((song: SongEntry) =>
-                {if (song.cookieID!==-1 && song.id) {
+                {if (song.cookieID!=="-1" && song.id) {
                     return(
                         <MenuItem key={song.id} value={song.id}>{song.song} 
                             <ListItemSecondaryAction>

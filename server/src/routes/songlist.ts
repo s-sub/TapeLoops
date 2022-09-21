@@ -46,7 +46,7 @@ router.get('/', async (req, res) => {
 
   const userFlushNeededOnUpload = (!userExists && numUsers>=(+maxUsers));
 
-  void Audiofile.find({$or: [{ cookieID: -1 }, { cookieID: req.cookies.cookieName }]}).then(file => {
+  void Audiofile.find({$or: [{ cookieID: "-1" }, { cookieID: req.cookies.cookieName }]}).then(file => {
       res.json({files: file, existingUser: userExists, flushFlag: userFlushNeededOnUpload});
     });
 

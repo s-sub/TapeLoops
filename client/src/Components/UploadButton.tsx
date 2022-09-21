@@ -125,7 +125,6 @@ export default function UploadButton() {
         if (event.target && event.target.files) {
             const newfile = event.target.files[0];
             try {
-                console.log(newfile.type, 'type')
                 if (newfile.type && (newfile.type === 'audio/midi' || newfile.type.slice(0,5)!=='audio')) {
                     setInvalidFiletype(true);
                 }
