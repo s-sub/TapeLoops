@@ -12,7 +12,7 @@ const cookieget = (req: Request, res: Response, next: NextFunction) => {
       let randomNumber=Math.random().toString();
       randomNumber=randomNumber.substring(2,randomNumber.length);
       const farFuture = new Date(new Date().getTime() + (1000*60*60*24*365*10));
-      res.cookie('cookieName',randomNumber, { expires: farFuture });
+      res.cookie('cookieName',randomNumber, { expires: farFuture, sameSite: 'none', secure: true });
       console.log('cookie created successfully', randomNumber);
     } else {
       console.log('cookie exists', cookie);
