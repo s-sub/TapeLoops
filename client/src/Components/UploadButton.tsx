@@ -1,4 +1,3 @@
-import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Input from '@mui/material/Input';
 import Modal from '@mui/material/Modal';
@@ -6,41 +5,17 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import CheckIcon from '@mui/icons-material/Check';
 import SaveIcon from '@mui/icons-material/Save';
-import { styled, createTheme} from '@mui/system';
 import { green } from '@mui/material/colors';
 import { useState, useEffect } from 'react';
 import { useStateValue, setSongList, setExistingUser, setFlushFlag } from '../state';
 import { SongEntry } from '../types';
 import {maxFilesPerUser, maxFileSize} from '../constants';
+import { CustomButton, ModalBoxStyle } from '../Styles/CustomStyles'
 
 import axios from "axios";
 import {apiBaseUrl} from '../constants'
 import FormData from 'form-data';
 
-const style = {
-    position: 'absolute' as const,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-    display: 'flex', 
-    alignItems: 'center'
-};
-
-  
-const CustomButton = styled(Button)(() => ({
-    backgroundColor: "#FF926B",
-    color: "#000000",
-    fontSize: 18,
-    fontFamily: 'Courier',
-    "&:disabled": {
-        backgroundColor: '#C2C2C2'
-    }
-}));
 
 export default function UploadButton() {
     const [selectedFile, setSelectedFile] = useState<Blob | null>(null);
@@ -64,6 +39,14 @@ export default function UploadButton() {
         }),
     };
 
+    // Whenever the audio list changes, check whether file uploads are at capacity 
+    useEffect(() => {
+        const newSongListLen = (audiolist.length)>maxFilesPerUser;
+        setUploadsAtCapacity(newSongListLen)
+    },[audiolist])
+
+
+    // Define modal open/close methods
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setSuccess(false);
@@ -71,17 +54,49 @@ export default function UploadButton() {
         setOpen(false);
     };
 
+    // When files are selected, check file validity and store file as blob if valid
+    const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSuccess(false)
+        if (event.target && event.target.files) {
+            const newfile = event.target.files[0];
+            try {
+                if (newfile.type && (newfile.type === 'audio/midi' || newfile.type.slice(0,5)!=='audio')) {
+                    setInvalidFiletype(true);
+                }
+                else if (newfile.size > maxFileSize) {
+                    setInvalidFiletype(false);
+                    setInvalidFilesize(true);
+                }
+                else {
+                    setInvalidFilesize(false);
+                    setInvalidFiletype(false);
+                    const blob = new Blob([newfile],{type: 'audio/mpeg'})
+                    setIsFilePicked(true);
+                    setSelectedFile(blob)
+                    setnewName(newfile.name);
+                }
+            } catch (e: unknown) {
+                console.error(e);
+            }
+        }
+	};
+
+    // When valid file selected, send to backend for file upload
     const handleUpload = async () => {
         try {
-            console.log('test', isFilePicked, selectedFile)
             if (isFilePicked && selectedFile) {
                 setLoading(true);
+
+                // Store blob of selected file in formData for file upload
                 // eslint-disable-next-line prefer-const
                 let formData = new FormData();
                 if (selectedFile) {formData.append('file',selectedFile,newName)}
                 formData.append('name',newName)
                 console.log('formdata',formData, typeof(formData))
 
+                /** If user is new, log user in backend 
+                 * and send flag indicating whether old user needs to be evicted 
+                 * to ensure user storage does not exceed capacity */ 
                 if (!existingUser) {
                     const { data: newID } = await axios.post(
                         `${apiBaseUrl}/users/`,
@@ -90,7 +105,8 @@ export default function UploadButton() {
                     dispatch(setFlushFlag(false));
                     dispatch(setExistingUser(true));
                 }
-
+                
+                // Send file to backend for upload to S3
                 const { data: newID } = await axios.post<FormData>(
                     `${apiBaseUrl}/upload/`,
                     formData
@@ -120,41 +136,9 @@ export default function UploadButton() {
           }
     }
 
-    const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSuccess(false)
-        if (event.target && event.target.files) {
-            const newfile = event.target.files[0];
-            try {
-                if (newfile.type && (newfile.type === 'audio/midi' || newfile.type.slice(0,5)!=='audio')) {
-                    setInvalidFiletype(true);
-                }
-                else if (newfile.size > maxFileSize) {
-                    setInvalidFiletype(false);
-                    setInvalidFilesize(true);
-                }
-                else {
-                    setInvalidFilesize(false);
-                    setInvalidFiletype(false);
-                    const blob = new Blob([newfile],{type: 'audio/mpeg'})
-                    setIsFilePicked(true);
-                    setSelectedFile(blob)
-                    setnewName(newfile.name);
-                }
-            } catch (e: unknown) {
-                console.error(e);
-            }
-        }
-	};
-
-    useEffect(() => {
-        const newSongListLen = (audiolist.length)>maxFilesPerUser;
-        setUploadsAtCapacity(newSongListLen)
-    },[audiolist])
-
     return (
         <div>
         <CustomButton variant="contained" 
-            // sx={{backgroundColor: "#FF926B", color: "#000000", fontSize: 18}} 
             disabled={uploadsAtCapacity} onClick={handleOpen}>
             {uploadsAtCapacity ? <span><i>Uploads at Capacity</i></span> : <span>Upload your own!</span>}
         </CustomButton>
@@ -162,7 +146,7 @@ export default function UploadButton() {
             open={open && !uploadsAtCapacity}
             onClose={handleClose}
         >
-            <Box sx={style}>
+            <Box sx={ModalBoxStyle}>
                 <Input type="file" name="file" id="upload" onChange={changeHandler} />
                 <Box sx={{ m: 1, position: 'relative' }}>
                     <Fab

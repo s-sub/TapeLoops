@@ -1,5 +1,4 @@
-// import {useState,useEffect} from 'react';
-import { useStateValue, setPlay, setLooplen, setLoopstart, setCtx, setSrc,restartContext, setSpeedChangeTime} from '../state';
+import { useStateValue, setPlay, setLooplen, setLoopstart, setCtx, setSrc,restartContext} from '../state';
 import {useState} from 'react';
 import { Tape } from '../types';
 import '../Styles/Deck.css'
@@ -25,8 +24,10 @@ export default function ControlBar(props: {tape: Tape}) {
         }
     }
 
+    /** Define new loop length according to denominator parameter, 
+     *  update dependent variables, and dispatch as state / restart context */ 
     const setLoop = (loopPortion: number) => {
-        //To add comments
+        
         const setter = async () => {
             if (!tape.audioSrc.buffer) {return}
 
@@ -43,14 +44,13 @@ export default function ControlBar(props: {tape: Tape}) {
             const audioParams = {
                 loopStart: newLoopStart,
                 loopEnd: newLoopStart + cliplength*newLoop,
-                // timeOffset: transformTime
             }
+
             const {newaudioCtx: newaudioCtx, newaudioSrc: newaudioSrc} = restartContext(tape, audioParams);
             dispatch(setCtx(newaudioCtx, tape.name))
             dispatch(setSrc(newaudioSrc, tape.name))
-            //To-do - kill SpeedChangeTime everywhere
-            dispatch(setSpeedChangeTime(currTime))
 
+            // Set state indicating which unique button is currently pressed for UI adjustments
             switch(loopPortion) {
                 case 1:
                     setLoopstate([1,0,0,0])

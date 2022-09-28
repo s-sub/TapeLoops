@@ -1,7 +1,7 @@
 import '../Styles/CassetteLoops.css'
 import { Tape } from '../types';
 
-// eslint-disable-next-line react/prop-types
+// SVGs for cassette tapes depending on tape's loop configuration
 const CassetteDrawing4 = (tape: Tape) => {
 
     return (
@@ -74,7 +74,6 @@ const CassetteDrawing4 = (tape: Tape) => {
         </svg>
 
 )};
-
 
 const CassetteDrawing1 = (tape: Tape) => {
 

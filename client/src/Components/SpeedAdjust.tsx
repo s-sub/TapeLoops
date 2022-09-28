@@ -1,27 +1,9 @@
 import * as React from 'react';
-import Slider from '@mui/material/Slider';
+// import Slider from '@mui/material/Slider';
 import { Tape } from '../types';
 import { useStateValue, setSpeed_anim, setSrc, setCtx, restartContext} from '../state';
-import { styled} from '@mui/system';
-
-
-const CustomSlider = styled(Slider)(() => ({
-  color: "#DDD6CE",
-  fontFamily: "Courier",
-  "& .MuiSlider-thumb": {
-    backgroundColor: "#FF926B",
-    radius: 30
-  },
-  "& .MuiSlider-rail": {
-    color: '#cfc5c2'
-  },
-  "& .MuiSlider-track": {
-    color: '#cfc5c2'
-  },
-  "& .MuiSlider-markLabel": {
-    color: "black"
-  }
-}));
+// import { styled} from '@mui/system';
+import { SpeedSlider } from '../Styles/CustomStyles'
 
 export default function VerticalSlider(props: {tape: Tape}) {
     const tape = props.tape;
@@ -64,14 +46,13 @@ export default function VerticalSlider(props: {tape: Tape}) {
         setValue(newValue as number);
     }
 
+    // On slider release, restart context with new speed value
     const handleChangeCommit = async () => {
-      
         const audioParams = {speed: value/100}
         dispatch(setSpeed_anim((value/100), tape.name));
         const {newaudioCtx: newaudioCtx, newaudioSrc: newaudioSrc} = restartContext(tape, audioParams);
         dispatch(setCtx(newaudioCtx, tape.name))
         dispatch(setSrc(newaudioSrc, tape.name))
-
     };
 
     const valuetext = (value: number) => {
@@ -80,7 +61,7 @@ export default function VerticalSlider(props: {tape: Tape}) {
     }
 
     return (
-        <CustomSlider
+        <SpeedSlider
             sx={{
             '& input[type="range"]': {
                 WebkitAppearance: 'slider-vertical',

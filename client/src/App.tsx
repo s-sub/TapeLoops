@@ -3,7 +3,7 @@ import UploadButton from './Components/UploadButton';
 import SingleDeck from './Components/SingleDeck';
 import GitHubIcon from '@mui/icons-material/GitHub';
 
-import './App.css';
+import './Styles/App.css';
 import './Styles/Deck.css'
 import axios from "axios";
 import {Grid} from '@mui/material'

@@ -33,8 +33,7 @@ export default function SongMenu(props: {tape: Tape}) {
         }
     },[deleteID])
 
-
-    
+    // If audiolist has yet to be retrieved, mark server state as loading
     useEffect(() => {
         if (audiolist.length===0) {
             setLoading(true)
@@ -44,29 +43,12 @@ export default function SongMenu(props: {tape: Tape}) {
         }
     },[audiolist])
 
-    const handleDelete = async (id: string) => {
-        try {
-            await dispatch(setDeleteID(id))
-            await axios.delete<string>(
-                `${apiBaseUrl}/delete/${id}`
-            );
-            // setSongID("")
-            const newAudioList = audiolist.filter((song: SongEntry) => song.id !== id);
-            dispatch(setSongList(newAudioList))
-
-        } catch (e: unknown) {
-            if (axios.isAxiosError(e)) {
-              console.error(e?.response?.data || "Unrecognized axios error");
-            } else {
-              console.error("Unknown error", e);
-            }
-        }
-    };
-
+    // When audio file is selected from dropdown, load it into the tape
     const handleChange = async (event: SelectChangeEvent) => {
         setSongID(event.target.value as string);
         if (event.target.value==="") {return}
         try {
+            // Find the file's ID and dispatch it to the backend
             const matchingEntry = audiolist.find((song) => song.id === event.target.value);
             let matchingEntryID = "-1"
             if (matchingEntry) {matchingEntryID = matchingEntry.id} else {throw new Error('ID mismatch')}
@@ -75,6 +57,7 @@ export default function SongMenu(props: {tape: Tape}) {
                 {responseType: 'arraybuffer'}
               );
 
+            // Construct a buffer within the tape's audio context using the server response and restart the tape with a new context
             const audioBuffer = await tape.audioCtx.decodeAudioData(songBuffer);
             const audioParams = {audioBuffer: audioBuffer}
             const {newaudioCtx: newaudioCtx, newaudioSrc: newaudioSrc} = restartContext(tape, audioParams);
@@ -89,7 +72,27 @@ export default function SongMenu(props: {tape: Tape}) {
           }
     };
 
-        return(
+    // Send delete request to server
+    const handleDelete = async (id: string) => {
+        try {
+            await dispatch(setDeleteID(id))
+            await axios.delete<string>(
+                `${apiBaseUrl}/delete/${id}`
+            );
+            // Remove file from frontend audio list
+            const newAudioList = audiolist.filter((song: SongEntry) => song.id !== id);
+            dispatch(setSongList(newAudioList))
+
+        } catch (e: unknown) {
+            if (axios.isAxiosError(e)) {
+              console.error(e?.response?.data || "Unrecognized axios error");
+            } else {
+              console.error("Unknown error", e);
+            }
+        }
+    };
+
+    return(
         <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label" sx={{align: "center"}}>
                 {loading ? <div>{"Loading - Server starting up . . .     "}
