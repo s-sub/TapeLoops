@@ -1,14 +1,11 @@
 import express from 'express';
-// import {SongEntry} from '../types';
 
 import {UserfileGen} from '../models/userlist';
 import UserConnection from '../models/userlist';
 const Userfile = UserfileGen(UserConnection);
-// const Userfile = UserConnection.model('Userfile');
 import {AudiofileGen} from '../models/audiofiles';
 import FileConnection from '../models/audiofiles';
 const Audiofile = AudiofileGen(FileConnection);
-// const Audiofile = FileConnection.model('Audiofile');
 
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
@@ -34,6 +31,7 @@ const client = new S3Client({
 
 const router = express.Router();
 
+// Update most recently logged in time for current user
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 router.put('/touch', async (req, res) => {
     try {
@@ -52,6 +50,7 @@ router.put('/touch', async (req, res) => {
     }
 });
 
+// Create new user, evicting the least recently logged in user if server is at max user capacity
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 router.post('/', async (req, res) => {
     try {
@@ -72,7 +71,7 @@ router.post('/', async (req, res) => {
             await Userfile.deleteOne({_id: LRU._id});
             console.log(LRU, 'least recently loggedin');
 
-            //Delete all audiofiles associated with LRU's cookie ID -> CURRENT
+            //Delete all audiofiles associated with LRU's cookie ID
             const arrayFound = await Audiofile.find({cookieID: (+LRU.cookieID)}, "key");
             await Audiofile.deleteMany({cookieID: (+LRU.cookieID)});
             arrayFound.map(async (doc) => {
@@ -83,11 +82,7 @@ router.post('/', async (req, res) => {
                 }));
             });
 
-
-            // console.log(found);
-
         }
-
         res.send('User Entry Created');
     } catch (error: unknown) {
         let errorMessage = 'Something went wrong.';

@@ -31,7 +31,7 @@ const router = express.Router();
 router.delete('/:id', async (req, res) => {
 
     try {
-        
+        // Search for file in MongoDB
         const foundsong: SongEntry | undefined | null = await Audiofile.findById(req.params.id);
         let foundkey;
         let foundCookie;
@@ -41,16 +41,16 @@ router.delete('/:id', async (req, res) => {
             foundCookie = foundsong.cookieID;
           } else {throw new Error("Song does not exist");}
 
-        console.log('reqcookie', typeof(req.cookies.cookieName));
-        console.log('foundcookie', typeof(foundCookie));
         if (req.cookies.cookieName!==foundCookie) {throw new Error("Cookie mismatch error");}
 
         console.log('key', foundkey);
+        // Send delete request to S3
         await client.send(new DeleteObjectCommand({
             Bucket: bucketname,
             Key: foundkey
           }));
         
+        // Delete file from MongoDB
         await Audiofile.deleteOne({_id: req.params.id});
         
         console.log(`${foundsong.song} successfully deleted from S3 and DB`);

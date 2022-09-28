@@ -8,15 +8,6 @@ const url = process.env.MONGODB_URI_FILES as string;
 
 console.log('connecting to', url);
 
-// mongoose.connect(url)
-//     .then(() => {
-//         console.log('Connected to MongoDB - Files');
-// })
-// .catch((error) => {
-//     console.log('error connecting to MongoDB - Files:', error.message);
-// });
-
-
 const conn = mongoose.createConnection(url);
 if (conn) {
     console.log('Connected to MongoDB - Files');

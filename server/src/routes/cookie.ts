@@ -1,11 +1,9 @@
-// import express from 'express';
 import { Request, Response, NextFunction } from 'express';
-// const router = express.Router();
 
+// Set new cookie if new user // not already set
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 const cookieget = (req: Request, res: Response, next: NextFunction) => {
     let cookie: string | undefined = undefined;
-    // console.log('cookierouter',req.cookies);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     if (req.cookies) {cookie = req.cookies.cookieName;}
     if (cookie === undefined) {
