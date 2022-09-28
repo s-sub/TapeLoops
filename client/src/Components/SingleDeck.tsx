@@ -8,6 +8,7 @@ import SongMenu from './SongSelector';
 import RangeSlider from './PlayBar';
 import ControlBar from './ControlBar';
 
+// Consolidate all sub-components into a single Cassette Tape Deck component which can be duplicated
 const SingleDeck = (props: {tape: Tape}) => {
     const tape = props.tape;
     return (

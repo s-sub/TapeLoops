@@ -15,13 +15,12 @@ export type State = {
 const audioContextConstructor = new AudioContext()
 
 const initialState: State = {
-  Tape1: {name: "Tape1", speed: 1, speedChangeTime: 0, play: false, looplen: 100, loopstart: 0, audio: null, audioCtx: audioContextConstructor, audioSrc: audioContextConstructor.createBufferSource(), audioBuffer: audioContextConstructor.createBuffer(1, 22050, 22050)},
-  Tape2: {name: "Tape2", speed: 1, speedChangeTime: 0, play: false, looplen: 100, loopstart: 0, audio: null, audioCtx: audioContextConstructor, audioSrc: audioContextConstructor.createBufferSource(), audioBuffer: audioContextConstructor.createBuffer(1, 22050, 22050)},
+  Tape1: {name: "Tape1", speed: 1, play: false, looplen: 100, loopstart: 0, audio: null, audioCtx: audioContextConstructor, audioSrc: audioContextConstructor.createBufferSource(), audioBuffer: audioContextConstructor.createBuffer(1, 22050, 22050)},
+  Tape2: {name: "Tape2", speed: 1, play: false, looplen: 100, loopstart: 0, audio: null, audioCtx: audioContextConstructor, audioSrc: audioContextConstructor.createBufferSource(), audioBuffer: audioContextConstructor.createBuffer(1, 22050, 22050)},
   audiolist: [],
   existingUser: false,
   flushFlag: false,
   deleteID: "NULL"
-  // Src1: audioContextConstructor.createBufferSource(),
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([

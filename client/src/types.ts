@@ -8,7 +8,6 @@ export interface SongEntry {
 export type Tape = {
     name: string;
     speed: number;
-    speedChangeTime: number;
     play: boolean;
     looplen: number;
     loopstart: number;

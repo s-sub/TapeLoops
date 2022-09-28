@@ -1,6 +1,7 @@
 import { State} from "./state";
 import { SongEntry , Tape} from "../types";
 
+// Define action types for use in recuder
 export type Action =
   | {
       type: "SET_SPEED_ANIM";
@@ -53,6 +54,7 @@ export type Action =
     payload: string;
   };
 
+// Dispatch new state variables via reducer
 export const reducer = (state: State, action: Action): State => {
     switch (action.type) {
         case "SET_EXISTING_USER_FLAG":
@@ -71,23 +73,7 @@ export const reducer = (state: State, action: Action): State => {
                 [action.tapename]: {
                     ...(state[action.tapename as keyof State] as Tape),
                     speed: action.payload
-                    // audioSrc: {
-                    //     ...state.Tape1.audioSrc,
-                        // playbackRate: {
-                        //     ...state.Tape1.audioSrc.playbackRate,
-                        //     value: action.payload
-                        // }
-                    // }
-                    
                 },
-            };
-        case "SET_SPEED_CHANGE_TIME":
-            return {
-                ...state,
-                Tape1: {
-                    ...state.Tape1,
-                    speedChangeTime: action.payload
-                }
             };
         case "PLAY_TOGGLE":
             return {
@@ -145,15 +131,12 @@ export const reducer = (state: State, action: Action): State => {
 };
 
 
+// Define setter functions for simplified interactions with dispatcher
 export const setSpeed_anim = (speed: number, tapename: string): Action => {
     const newduration = 3/(speed**4);
     const CSSname = `--animation-duration-${tapename}`;
     document.documentElement.style.setProperty(CSSname, `${newduration}s`);
     return { type: "SET_SPEED_ANIM", tapename: tapename, payload: speed };
-};
-
-export const setSpeedChangeTime = (time: number): Action => {
-    return {type: "SET_SPEED_CHANGE_TIME", payload: time};
 };
 
 export const setPlay = (play: boolean, tapename: string): Action => {

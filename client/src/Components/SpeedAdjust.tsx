@@ -1,8 +1,6 @@
 import * as React from 'react';
-// import Slider from '@mui/material/Slider';
 import { Tape } from '../types';
 import { useStateValue, setSpeed_anim, setSrc, setCtx, restartContext} from '../state';
-// import { styled} from '@mui/system';
 import { SpeedSlider } from '../Styles/CustomStyles'
 
 export default function VerticalSlider(props: {tape: Tape}) {

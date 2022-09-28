@@ -24,6 +24,8 @@ const theme = createTheme({
   },
 });
 
+
+// Secure handler to open links in a new tab
 export const openInNewTab = (url: string): void => {
   const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
   if (newWindow) newWindow.opener = null
@@ -35,6 +37,10 @@ function App() {
 
   axios.defaults.withCredentials = true;
 
+  /** 
+   * Check whether user exists, 
+   * retrieve default audiofiles and user's uploaded files, 
+   * and check whether server is at max capacity of users and requires eviction of an old user if this user uploads files */
   useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
 
@@ -44,9 +50,11 @@ function App() {
           `${apiBaseUrl}/songs`
         );
         
+        // If user exists, log current time as most recent login
         if (existingUser) {
             axios.put<void>(`${apiBaseUrl}/users/touch`)
         }
+        // Update state
         dispatch(setExistingUser(existingUser))
         dispatch(setFlushFlag(flushFlag))
         dispatch(setSongList(songListFromApi));
